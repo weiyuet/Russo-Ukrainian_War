@@ -24,7 +24,6 @@ library(reshape2)
 ![](https://ichef.bbci.co.uk/news/976/cpsprodpb/2CDE/production/_124868411_ukraine_russian_control_areas_map_2x640-nc.png)
 
 # Data
-
 ```{r}
 # Import data
 russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
@@ -46,16 +45,17 @@ russia_losses_personnel_long$value <- as.double(as.character(russia_losses_perso
 ```{r}
 russia_losses_equipment_long %>% 
   filter(variable == "aircraft" | variable == "helicopter" | variable == "tank" | variable == "APC" | variable == "field artillery" | variable == "drone") %>%
-  gg_line_col(x_var = date,
-              y_var = value,
-              col_var = variable,
-              x_title = "",
-              y_title = "",
-              title = "Russian Equipment Lost",
-              col_legend_none = TRUE,
-              caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
-              theme = theme_bw())
-
+  gg_line_col_facet(x_var = date,
+                    y_var = value,
+                    col_var = variable,
+                    facet_var = variable,
+                    facet_scales = "free_y",
+                    x_title = "",
+                    y_title = "",
+                    title = "Russian Equipment Lost",
+                    col_legend_none = TRUE,
+                    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
+                    theme = theme_bw())
 ```
 
 ## Personnel
