@@ -31,7 +31,7 @@ russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
 russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
 ```
 
-```{r}
+```{r, warning=FALSE}
 # Change data to long format
 russia_losses_equipment_long <- melt(russia_losses_equipment, id = "date")
 russia_losses_personnel_long <- melt(russia_losses_personnel, id = "date")
@@ -46,16 +46,15 @@ russia_losses_personnel_long$value <- as.double(as.character(russia_losses_perso
 ```{r}
 russia_losses_equipment_long %>% 
   filter(variable == "aircraft" | variable == "helicopter" | variable == "tank" | variable == "APC" | variable == "field artillery" | variable == "drone") %>%
-  gg_line_col_facet(x_var = date,
-                    y_var = value,
-                    col_var = variable,
-                    facet_var = variable,
-                    x_title = "",
-                    y_title = "",
-                    title = "Russian Equipment Lost",
-                    col_legend_none = TRUE,
-                    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
-                    theme = theme_bw())
+  gg_line_col(x_var = date,
+              y_var = value,
+              col_var = variable,
+              x_title = "",
+              y_title = "",
+              title = "Russian Equipment Lost",
+              col_legend_none = TRUE,
+              caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
+              theme = theme_bw())
 
 ```
 
