@@ -9,6 +9,7 @@ output:
     fig_height: 10
     toc: yes
     toc_float: yes
+    number_sections: true
 ---
 ```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -16,7 +17,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(simplevis)
 library(reshape2)
-library(scales)
 ```
 
   - Inspired by the data sets collected by @LenaSokol and @PetroIvanyuk on Kaggle
@@ -27,43 +27,50 @@ library(scales)
 
 ```{r}
 # Import data
-russia_losses_equipment <- read_csv("russia_losses_equipment.csv")
-russia_losses_personnel <- read_csv("russia_losses_personnel.csv")
+russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
+russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
 ```
 
-```{r, include=FALSE}
+```{r}
 # Change data to long format
 russia_losses_equipment_long <- melt(russia_losses_equipment, id = "date")
+russia_losses_personnel_long <- melt(russia_losses_personnel, id = "date")
 
-head(russia_losses_equipment_long)
+str(russia_losses_personnel_long)
+# Re-code value from chr to dbl
+russia_losses_personnel_long$value <- as.double(as.character(russia_losses_personnel_long$value))
 ```
 
 # Losses by Russia
 ## Equipment
 ```{r}
 russia_losses_equipment_long %>% 
-  filter(variable == "aircraft" | variable == "helicopter" | variable == "tank" | variable == "APC" | variable == "field artillery" | variable == "drone") %>% 
-  ggplot() +
-  aes(date, value, colour = variable) +
-  geom_line(size = 0.3) +
-  geom_point(size = 0.5) +
-  facet_wrap(~variable, scales = "free_y") +
-  labs(x = NULL, y = NULL, title = "Russian Equipment Lost", caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet") +
-  theme_bw() +
-  theme(legend.position = "none")
+  filter(variable == "aircraft" | variable == "helicopter" | variable == "tank" | variable == "APC" | variable == "field artillery" | variable == "drone") %>%
+  gg_line_col_facet(x_var = date,
+                    y_var = value,
+                    col_var = variable,
+                    facet_var = variable,
+                    x_title = "",
+                    y_title = "",
+                    title = "Russian Equipment Lost",
+                    col_legend_none = TRUE,
+                    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
+                    theme = theme_bw())
 
 ```
 
 ## Personnel
 ```{r}
-
-russia_losses_personnel %>% 
-  gg_line(x_var = date,
-          y_var = personnel,
-          x_title = "",
-          y_title = "",
-          title = "Russian Personnel Lost",
-          caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
-          theme = theme_bw())
+russia_losses_personnel_long %>% 
+  filter(variable == "personnel" | variable == "POW") %>% 
+  gg_line_col(x_var = date,
+              y_var = value,
+              col_var = variable,
+              x_title = "",
+              y_title = "",
+              title = "Russian Personnel Lost",
+              col_legend_none = TRUE,
+              caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
+              theme = theme_bw())
 ```
 
