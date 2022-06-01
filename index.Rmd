@@ -11,7 +11,7 @@ output:
     toc_float: yes
     number_sections: true
 ---
-```{r setup, include=FALSE, warning=FALSE}
+```{r Setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
@@ -20,22 +20,25 @@ library(reshape2)
 ```
 
   - Inspired by the data sets collected by @LenaSokol and @PetroIvanyuk on Kaggle
+  
+  - Want to understand the costs of war
+  
+  - Look into the broader picture such as global energy supply and food supply
 
 ![](https://ichef.bbci.co.uk/news/976/cpsprodpb/2CDE/production/_124868411_ukraine_russian_control_areas_map_2x640-nc.png)
 
 # Data
-```{r}
+```{r Russian Casualties CSV}
 # Import data
 russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
 russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
 ```
 
-```{r, warning=FALSE}
+```{r Change data to long format, warning=FALSE}
 # Change data to long format
 russia_losses_equipment_long <- melt(russia_losses_equipment, id = "date")
 russia_losses_personnel_long <- melt(russia_losses_personnel, id = "date")
 
-str(russia_losses_personnel_long)
 # Re-code value from chr to dbl
 russia_losses_personnel_long$value <- as.double(as.character(russia_losses_personnel_long$value))
 ```
@@ -71,5 +74,26 @@ russia_losses_personnel_long %>%
               col_legend_none = TRUE,
               caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
               theme = theme_bw())
+```
+
+# Russian Crude Oil Production
+
+```{r Crude Oil Production CSV}
+crude_oil_production_annual <- read_csv("data/crude_oil_production_annual.csv")
+```
+
+```{r Filter/choose data}
+crude_oil_production_annual %>% 
+  filter(LOCATION == "RUS" | LOCATION == "UKR") %>% 
+  gg_line_col(x_var = TIME,
+              y_var = Value,
+              col_var = LOCATION,
+              x_na_rm = TRUE,
+              x_title = "",
+              y_title = "",
+              col_title = "",
+              title = "Crude Oil Production in (Total, Thousand TOE)",
+              caption = "Source: Extended world energy balances. OECD. Graphic: @wyuet",
+              theme = theme_light())
 ```
 
