@@ -71,6 +71,7 @@ russia_losses_personnel_long %>%
               x_title = "",
               y_title = "",
               title = "Russian Personnel Lost",
+              col_title = "",
               col_legend_none = TRUE,
               caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
               theme = theme_bw())
@@ -84,18 +85,17 @@ crude_oil_production_annual <- read_csv("data/crude_oil_production_annual.csv")
 
 ```{r Filter/choose data}
 crude_oil_production_annual %>% 
-  filter(LOCATION == "RUS" | LOCATION == "UKR") %>% 
-  gg_line_col_facet(x_var = TIME,
-                    y_var = Value,
-                    col_var = LOCATION,
-                    facet_var = LOCATION,
-                    facet_scales = "free_y",
-                    x_na_rm = TRUE,
-                    x_title = "",
-                    y_title = "",
-                    col_legend_none = TRUE,
-                    title = "Crude Oil Production in (Total, Thousand TOE)",
-                    caption = "Source: Extended world energy balances. OECD. Graphic: @wyuet",
-                    theme = theme_light())
+  filter(LOCATION == "RUS" | LOCATION == "UKR" | LOCATION == "EU28" | LOCATION =="OECD") %>% 
+  gg_line_col(x_var = TIME,
+              y_var = Value,
+              col_var = LOCATION,
+              x_na_rm = TRUE,
+              x_title = "",
+              y_title = "",
+              col_title = "",
+              col_legend_none = FALSE,
+              title = "Crude Oil Production in (Total, Thousand TOE)",
+              caption = "Source: Extended world energy balances. OECD. Graphic: @wyuet",
+              theme = theme_light())
 ```
 
