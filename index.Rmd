@@ -27,25 +27,25 @@ library(reshape2)
 
 ![](https://ichef.bbci.co.uk/news/976/cpsprodpb/2CDE/production/_124868411_ukraine_russian_control_areas_map_2x640-nc.png)
 
-# Data
+# Russian Casualties
 ```{r Russian Casualties CSV}
 # Import data
 russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
 russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
 ```
 
-```{r Change data to long format, warning=FALSE}
+```{r Change data to long format, include=FALSE , warning=FALSE}
 # Change data to long format
 russia_losses_equipment_long <- melt(russia_losses_equipment, id = "date")
 russia_losses_personnel_long <- melt(russia_losses_personnel, id = "date")
 
-# Re-code value from chr to dbl
+# Convert value from chr to dbl
+russia_losses_equipment_long$value <- as.double(as.character(russia_losses_equipment_long$value))
 russia_losses_personnel_long$value <- as.double(as.character(russia_losses_personnel_long$value))
 ```
 
-# Losses by Russia
 ## Equipment
-```{r}
+```{r Russian Losses Equipment plot}
 russia_losses_equipment_long %>% 
   filter(variable == "aircraft" | variable == "helicopter" | variable == "tank" | variable == "APC" | variable == "field artillery" | variable == "drone") %>%
   gg_line_col_facet(x_var = date,
@@ -62,7 +62,7 @@ russia_losses_equipment_long %>%
 ```
 
 ## Personnel
-```{r}
+```{r Russian Losses Personnel plot}
 russia_losses_personnel_long %>% 
   filter(variable == "personnel" | variable == "POW") %>% 
   gg_line_col(x_var = date,
