@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(simplevis)
+library(ggblanket)
 library(reshape2)
 ```
 
@@ -43,38 +44,38 @@ russia_losses_personnel_long$value <- as.double(as.character(russia_losses_perso
 ```
 
 ## Equipment
-```{r Russian Losses Equipment plot}
+```{r Russian Losses Equipment plot, warning=FALSE}
 russia_losses_equipment_long %>% 
-  filter(variable == "aircraft" | variable == "helicopter" | variable == "tank" | variable == "APC" | variable == "field artillery" | variable == "drone") %>%
-  gg_line_col_facet(x_var = date,
-                    y_var = value,
-                    col_var = variable,
-                    facet_var = variable,
-                    facet_scales = "free_y",
-                    x_title = "",
-                    y_title = "",
-                    title = "Russian Equipment Lost",
-                    col_legend_none = TRUE,
-                    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
-                    theme = theme_bw())
+  filter(variable == "aircraft" | variable == "helicopter" | variable == "tank" | variable == "APC" | variable == "field artillery" | variable == "drone") %>% 
+  gg_line(x = date,
+          y = value,
+          col = variable,
+          size = 0.7,
+          title = "Russian Equipment Lost",
+          x_title = "",
+          y_title = "",
+          col_legend_place = "r",
+          col_title = "",
+          caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
+          theme = theme_light())
 
 ggsave("figures/russia-losses-equipment.png", width = 6, height = 4)
 ```
 
 ## Personnel
-```{r Russian Losses Personnel plot}
+```{r Russian Losses Personnel plot, warning=FALSE}
 russia_losses_personnel_long %>% 
   filter(variable == "personnel" | variable == "POW") %>% 
-  gg_line_col(x_var = date,
-              y_var = value,
-              col_var = variable,
-              x_title = "",
-              y_title = "",
-              title = "Russian Personnel Lost",
-              col_title = "",
-              col_legend_none = TRUE,
-              caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
-              theme = theme_bw())
+  gg_line(x = date,
+          y = value,
+          col = variable,
+          title = "Russian Personnel Lost",
+          x_title = "",
+          y_title = "",
+          col_legend_place = "r",
+          col_title = "",
+          caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
+          theme = theme_light())
 
 ggsave("figures/russia-losses-personnel.png", width = 6, height = 4)
 ```
