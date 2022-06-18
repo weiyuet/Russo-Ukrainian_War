@@ -1,12 +1,13 @@
 ---
 title: "Russo-Ukrainian War"
 subtitle: "Numbers from the Ukraine-Russia War"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
   html_document:
     code_folding: hide
     theme: simple
-    fig_width: 12
-    fig_height: 10
+    fig_width: 9
+    fig_height: 6
     toc: yes
     toc_float: yes
     number_sections: true
@@ -17,6 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(ggblanket)
 library(reshape2)
+library(scales)
 ```
 
 Inspired by the data sets collected by [Lena Sokol's Kaggle site](https://www.kaggle.com/code/sokolheavy/2022-ukraine-russia-war-visualization) and [Petro Ivanyuk's Kaggle site.](https://www.kaggle.com/datasets/piterfm/2022-ukraine-russian-war)
@@ -54,9 +56,10 @@ russia_losses_equipment_long %>%
           y_title = "",
           col_legend_place = "r",
           col_title = "",
-          caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
+          caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @wyuet",
           theme = theme_light()) +
-  geom_point()
+  geom_point() +
+  scale_x_date(expand = c(0,0))
 
 ggsave("figures/russia-losses-equipment.png", width = 6, height = 4)
 ```
@@ -73,9 +76,10 @@ russia_losses_personnel_long %>%
           y_title = "",
           col_legend_place = "r",
           col_title = "",
-          caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine. Graphic: @wyuet",
+          caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @wyuet",
           theme = theme_light()) +
-  geom_point()
+  geom_point() +
+  scale_x_date(expand = c(0,0))
 
 ggsave("figures/russia-losses-personnel.png", width = 6, height = 4)
 ```
@@ -102,9 +106,10 @@ crude_oil_production_annual %>%
           y_title = "",
           col_legend_place = "r",
           col_title = "",
-          caption = "Source: Extended World Energy Balances. OECD. Graphic: @wyuet",
+          caption = "Source: Extended World Energy Balances. OECD\nGraphic: @wyuet",
           theme = theme_light()) +
-  geom_point()
+  geom_point() +
+  scale_x_continuous(labels = label_number())
 
 ggsave("figures/russia-crude-oil-production.png", width = 6, height = 4)
 ```
