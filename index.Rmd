@@ -87,14 +87,11 @@ ggsave("figures/russia-losses-personnel.png", width = 6, height = 4)
 
 # Russian Crude Oil Production
 
+Crude oil production: https://data.oecd.org/energy/crude-oil-production.htm
+
 ```{r Crude Oil Production CSV}
 crude_oil_production_annual <- read_csv("data/crude_oil_production_annual.csv")
 ```
-
-```{r Change TIME variable from dbl to date, include=FALSE, warning=FALSE}
-#crude_oil_production_annual$TIME <- as_date(as.double(crude_oil_production_annual$TIME))
-```
-
 
 ```{r Crude Oil Production plot, warning=FALSE}
 crude_oil_production_annual %>% 
