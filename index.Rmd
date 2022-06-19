@@ -1,6 +1,5 @@
 ---
 title: "Russo-Ukrainian War"
-subtitle: "Numbers from the Ukraine-Russia War"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
   html_document:
@@ -48,6 +47,7 @@ russia_losses_personnel_long$value <- as.double(as.character(russia_losses_perso
 ```{r Russian Losses Equipment plot, warning=FALSE}
 russia_losses_equipment_long %>% 
   filter(variable == "aircraft" | variable == "helicopter" | variable == "tank" | variable == "APC" | variable == "field artillery" | variable == "drone") %>% 
+  drop_na() %>% 
   gg_line(x = date,
           y = value,
           col = variable,
@@ -58,7 +58,7 @@ russia_losses_equipment_long %>%
           col_title = "",
           caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @wyuet",
           theme = theme_light()) +
-  geom_point() +
+  geom_point(size = 0.7) +
   scale_x_date(expand = c(0,0))
 
 ggsave("figures/russia-losses-equipment.png", width = 6, height = 4)
@@ -68,6 +68,7 @@ ggsave("figures/russia-losses-equipment.png", width = 6, height = 4)
 ```{r Russian Losses Personnel plot, warning=FALSE}
 russia_losses_personnel_long %>% 
   filter(variable == "personnel" | variable == "POW") %>% 
+  drop_na() %>% 
   gg_line(x = date,
           y = value,
           col = variable,
@@ -78,7 +79,7 @@ russia_losses_personnel_long %>%
           col_title = "",
           caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @wyuet",
           theme = theme_light()) +
-  geom_point() +
+  geom_point(size = 0.7) +
   scale_x_date(expand = c(0,0))
 
 ggsave("figures/russia-losses-personnel.png", width = 6, height = 4)
@@ -108,7 +109,7 @@ crude_oil_production_annual %>%
           col_title = "",
           caption = "Source: Extended World Energy Balances. OECD\nGraphic: @wyuet",
           theme = theme_light()) +
-  geom_point() +
+  geom_point(size = 0.7) +
   scale_x_continuous(labels = label_number(big.mark = ""))
 
 ggsave("figures/russia-crude-oil-production.png", width = 6, height = 4)
