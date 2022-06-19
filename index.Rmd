@@ -87,7 +87,9 @@ ggsave("figures/russia-losses-personnel.png", width = 6, height = 4)
 
 # Russian Crude Oil Production
 
-Crude oil production: https://data.oecd.org/energy/crude-oil-production.htm
+Crude oil production is defined as the quantities of oil extracted from the ground after the removal of inert matter or impurities. It includes crude oil, natural gas liquids (NGLs) and additives. This indicator is measured in thousand tonne of oil equivalent (toe). 
+
+[OECD Data](https://data.oecd.org/energy/crude-oil-production.htm)
 
 ```{r Crude Oil Production CSV}
 crude_oil_production_annual <- read_csv("data/crude_oil_production_annual.csv")
@@ -107,7 +109,9 @@ crude_oil_production_annual %>%
           caption = "Source: Extended World Energy Balances. OECD\nGraphic: @wyuet",
           theme = theme_light()) +
   geom_point(size = 0.7) +
-  scale_x_continuous(labels = label_number(big.mark = ""))
+  scale_x_continuous(breaks = seq(1960, 2020, 5),
+                     expand = c(0, 0),
+                     labels = label_number(big.mark = ""))
 
 ggsave("figures/russia-crude-oil-production.png", width = 6, height = 4)
 ```
