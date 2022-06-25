@@ -8,6 +8,8 @@ output:
     toc: yes
     toc_float: yes
     number_sections: true
+    fig-width: 7
+    fig_height: 6
 ---
 ```{r Setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -28,17 +30,17 @@ Want to understand the costs of war, and the broader picture such as global ener
 
 # Russian Casualties
 ```{r Russian Casualties CSV}
-# Import data
+#import data
 russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
 russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
 ```
 
 ```{r Data wrangling, include=FALSE , warning=FALSE}
-# Change data to long format
+#change data to long format
 russia_losses_equipment_long <- melt(russia_losses_equipment, id = "date")
 russia_losses_personnel_long <- melt(russia_losses_personnel, id = "date")
 
-# Convert value from chr to dbl
+#convert value from chr to dbl
 russia_losses_equipment_long$value <- as.double(as.character(russia_losses_equipment_long$value))
 russia_losses_personnel_long$value <- as.double(as.character(russia_losses_personnel_long$value))
 ```
@@ -51,12 +53,14 @@ russia_losses_equipment_long %>%
   gg_line(x = date,
           y = value,
           col = variable,
+          facet = variable,
           title = "Russian Equipment Lost",
           x_title = "",
           y_title = "",
-          col_legend_place = "b",
+          col_legend_place = "r",
           col_title = "",
           caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet",
+          facet_scales = "free_y",
           theme = theme_light()) +
   geom_point(size = 0.7) +
   scale_x_date(expand = c(0,0),
@@ -76,7 +80,7 @@ russia_losses_personnel_long %>%
           title = "Russian Personnel Lost",
           x_title = "",
           y_title = "",
-          col_legend_place = "b",
+          col_legend_place = "r",
           col_title = "",
           caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet",
           theme = theme_light()) +
@@ -106,7 +110,7 @@ crude_oil_production_annual %>%
           title = "Crude Oil Production in (Total, Thousand TOE)",
           x_title = "",
           y_title = "",
-          col_legend_place = "b",
+          col_legend_place = "r",
           col_title = "",
           caption = "Source: Extended World Energy Balances. OECD\nGraphic: @weiyuet",
           theme = theme_light()) +
@@ -143,7 +147,7 @@ world_map <- world_map %>%
 #create dataframe for points of information
 point_data <- world_map %>% 
   group_by(region) %>% 
-  # Create centroids for lat long per region
+  #create centroids for lat long per region
   filter(region %in% countries & region != "Ukraine") %>% 
   summarise(lat = mean(lat),
             long = mean(long)) %>% 
@@ -187,7 +191,7 @@ ggplot(world_map, aes(long, lat, group = group)) +
   #overlay country names
   geom_text(inherit.aes = FALSE, data = point_data, aes(long, lat, label = toupper(region), vjust = region_vjust, colour = name_colour), size = 2.8, family = "Arial") +
   #Ukraine label
-  geom_text(inherit.aes = FALSE, data = text_data, aes(long, lat, label = text), size = 6, family = "Arial", colour = "#1A5A9A") +
+  geom_text(inherit.aes = FALSE, data = text_data, aes(long, lat, label = text), size = 5.5, family = "Arial", colour = "#1A5A9A") +
   #Ukrainian cities
   geom_point(inherit.aes = FALSE, data = ukr_cities, aes(long, lat), colour = "1A5A9A") +
   geom_text(inherit.aes = FALSE, data = ukr_cities, aes(long, lat, label = name), size = 4, vjust = 1.7, family = "Arial", colour = "1A5A9A") +
