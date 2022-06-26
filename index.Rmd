@@ -62,6 +62,7 @@ russia_losses_equipment_long %>%
           caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet",
           facet_scales = "free_y",
           theme = theme_light()) +
+  scale_color_brewer(palette = "Dark2") +
   geom_point(size = 0.7) +
   scale_x_date(expand = c(0,0),
                labels = label_date_short())
