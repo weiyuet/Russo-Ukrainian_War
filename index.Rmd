@@ -8,7 +8,7 @@ output:
     toc: yes
     toc_float: yes
     number_sections: true
-    fig-width: 7
+    fig-width: 8
     fig_height: 6
 ---
 ```{r Setup, include=FALSE, warning=FALSE}
@@ -57,7 +57,7 @@ russia_losses_equipment_long %>%
           title = "Russian Equipment Lost",
           x_title = "",
           y_title = "",
-          col_legend_place = "r",
+          col_legend_place = NULL,
           col_title = "",
           caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet",
           facet_scales = "free_y",
