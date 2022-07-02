@@ -135,14 +135,14 @@ world_map <- map_data("world")
 
 #https://data.unhcr.org/en/situations/ukraine/location?secret=unhcrrestricted
 countries <- c("Ukraine", "Russian Federation", "Poland", "Republic of Moldova", "Romania", "Slovakia", "Hungary", "Belarus")
-refugees <- c(0,1305018, 1180677, 85797, 82733, 78972, 25042, 9006)
+refugees <- c(0,1412429, 1194642, 82700, 83321, 79770, 25800, 9280)
 data <- data.frame(countries, refugees)
 
 #set fill colours per region. Ukraine = blue, Russia & Belarus = red, Neighbouring countries = green, Others = grey
 world_map <- world_map %>% 
-  mutate(fill = case_when(region == "Ukraine" ~ "#90BFEE",
-                          region %in% c("Russia", "Belarus") ~ "#CB9DA7",
-                          region %in% countries ~ "#79BD9D",
+  mutate(fill = case_when(region == "Ukraine" ~ "#20B2AA",
+                          region %in% c("Russia") ~ "#CD0000",
+                          region %in% countries ~ "#2E8B57",
                           TRUE ~ "grey85"))
 
 #create dataframe for points of information
@@ -205,7 +205,7 @@ ggplot(world_map, aes(long, lat, group = group)) +
             ylim = c(44, 55)) +
   #add title and themes
   labs(title = "Number of Ukranian Refugees in Neighbouring Countries",
-       caption = "Data from UNHCR as of 21 June, 2022\nGraphic: @weiyuet") +
+       caption = "Data from UNHCR as of 28 June, 2022\nGraphic: @weiyuet") +
   theme_void() +
   theme(text = element_text(family = "Arial"),
         plot.margin = margin(r = 15, l = 15),
