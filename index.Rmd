@@ -13,13 +13,11 @@ output:
 ---
 ```{r Setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 library(tidyverse)
 library(ggblanket)
 library(reshape2)
 library(scales)
 library(maps)
-
 ```
 
 Inspired by the data sets collected by [Lena Sokol's Kaggle site](https://www.kaggle.com/code/sokolheavy/2022-ukraine-russia-war-visualization) and [Petro Ivanyuk's Kaggle site.](https://www.kaggle.com/datasets/piterfm/2022-ukraine-russian-war)
@@ -62,7 +60,7 @@ russia_losses_equipment_long %>%
           caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet",
           facet_scales = "free_y",
           theme = theme_light()) +
-  scale_color_brewer(palette = "Dark2") +
+  scale_color_brewer(type = "qual", palette = 2) +
   geom_point(size = 0.7) +
   scale_x_date(expand = c(0,0),
                labels = label_date_short())
@@ -140,9 +138,9 @@ data <- data.frame(countries, refugees)
 
 #set fill colours per region. Ukraine = blue, Russia & Belarus = red, Neighbouring countries = green, Others = grey
 world_map <- world_map %>% 
-  mutate(fill = case_when(region == "Ukraine" ~ "#20B2AA",
-                          region %in% c("Russia") ~ "#CD0000",
-                          region %in% countries ~ "#2E8B57",
+  mutate(fill = case_when(region == "Ukraine" ~ "#00A087",
+                          region %in% c("Russia") ~ "#E64B35",
+                          region %in% countries ~ "#4DBBD5",
                           TRUE ~ "grey85"))
 
 #create dataframe for points of information
@@ -164,7 +162,7 @@ point_data <- world_map %>%
     #add vjust parameters to adjust text data in plots
     region_vjust = case_when(refugees > 60000 ~ -.8, TRUE ~ -4),
     stat_vjust = case_when(refugees > 60000 ~1.1, TRUE ~ 0.1),
-    name_colour = case_when(refugees > 60000 ~ "#1A5A9A", TRUE ~ "white")
+    name_colour = case_when(refugees > 60000 ~ "#000000", TRUE ~ "white")
   )
 
 #Ukraine label
@@ -182,20 +180,20 @@ ukr_cities <- world.cities %>% filter(country.etc == "Ukraine") %>% arrange(-pop
 ggplot(world_map, aes(long, lat, group = group)) +
   geom_polygon(aes(fill = fill), colour = "white", size = 0.3) +
   #migration lines
-  geom_segment(inherit.aes = FALSE, data = point_data, aes(x = long_ukr, xend = long, y = lat_ukr, yend = lat), size = 0.8, linetype = "dotted", colour = "#1A5A9A") +
+  geom_segment(inherit.aes = FALSE, data = point_data, aes(x = long_ukr, xend = long, y = lat_ukr, yend = lat), size = 0.8, linetype = "dotted", colour = "#000000") +
   #overlay Ukrainian country map
   geom_polygon(data = world_map %>% filter(region == "Ukraine"), aes(fill = fill), colour = "white", size = 0.3) +
   #plot refugee bubbles
-  geom_point(inherit.aes = FALSE, data = point_data, aes(long, lat, size = refugees/1000), fill = "#90BFEE", colour = "#579DE2", shape = 21) +
+  geom_point(inherit.aes = FALSE, data = point_data, aes(long, lat, size = refugees/1000), fill = "gray85", colour = "#579DE2", shape = 21) +
   #overlay refugee numbers
-  geom_text(inherit.aes = FALSE, data = point_data, aes(long, lat, label = scales::comma(refugees), vjust = stat_vjust), size = 2.5, family = "Arial", colour = "#1A5A9A") +
+  geom_text(inherit.aes = FALSE, data = point_data, aes(long, lat, label = scales::comma(refugees), vjust = stat_vjust), size = 2.5, family = "Arial", colour = "#000000") +
   #overlay country names
   geom_text(inherit.aes = FALSE, data = point_data, aes(long, lat, label = toupper(region), vjust = region_vjust, colour = name_colour), size = 2.8, family = "Arial") +
   #Ukraine label
-  geom_text(inherit.aes = FALSE, data = text_data, aes(long, lat, label = text), size = 5.5, family = "Arial", colour = "#1A5A9A") +
+  geom_text(inherit.aes = FALSE, data = text_data, aes(long, lat, label = text), size = 5.5, family = "Arial", colour = "#000000") +
   #Ukrainian cities
-  geom_point(inherit.aes = FALSE, data = ukr_cities, aes(long, lat), colour = "1A5A9A") +
-  geom_text(inherit.aes = FALSE, data = ukr_cities, aes(long, lat, label = name), size = 4, vjust = 1.7, family = "Arial", colour = "1A5A9A") +
+  geom_point(inherit.aes = FALSE, data = ukr_cities, aes(long, lat), colour = "#000000") +
+  geom_text(inherit.aes = FALSE, data = ukr_cities, aes(long, lat, label = name), size = 4, vjust = 1.7, family = "Arial", colour = "#000000") +
   #set fill and colour to match inputs from dataframe with scale_identity
   scale_fill_identity() +
   scale_colour_identity() +
