@@ -14,7 +14,7 @@ russia_losses_personnel_long %>%
   ggplot(aes(x = date, y = value, colour = casualties)) +
   geom_line() +
   geom_point() +
-  scale_y_log10() +
+  scale_y_log10(labels = label_number(big.mark = ",")) +
   theme_classic() +
   theme(legend.position = c(0.8, 0.6)) +
   scale_colour_brewer(type = "qual", palette = 6) +
