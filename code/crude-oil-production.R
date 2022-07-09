@@ -15,7 +15,7 @@ crude_oil_production_annual %>%
   filter(LOCATION == "RUS" | LOCATION == "UKR" | LOCATION == "SAU" | LOCATION == "NOR" | LOCATION == "USA" | LOCATION == "EU28") %>%
   ggplot(aes(x = TIME, y = Value, colour = LOCATION)) +
   geom_line() +
-  scale_x_continuous(breaks = seq(1960, 2020, 10),
+  scale_x_continuous(breaks = seq(1965, 2020, 5),
                      expand = c(0, 0)) +
   scale_y_log10(labels = label_number(big.mark = ",")) +
   theme_classic() +
