@@ -15,11 +15,13 @@ crude_oil_production_annual %>%
   filter(LOCATION == "RUS" | LOCATION == "UKR" | LOCATION == "SAU" | LOCATION == "NOR" | LOCATION == "USA" | LOCATION == "EU28") %>%
   ggplot(aes(x = TIME, y = Value, colour = LOCATION)) +
   geom_line() +
+  geom_point(size = 0.7, show.legend = "none") +
   scale_x_continuous(breaks = seq(1965, 2020, 5),
                      expand = c(0, 0)) +
-  scale_y_log10(labels = label_number(big.mark = ",")) +
+  scale_y_log10(labels = label_number(suffix = " TOE", big.mark = ",")) +
   theme_classic() +
-  theme(legend.title = element_blank()) +
+  theme(legend.title = element_blank(),
+        axis.text.y = element_text(angle = 90)) +
   scale_colour_brewer(type = "qual", palette = 2) +
   labs(x = "", y = "",
        title = "Crude Oil Production (Total)",
