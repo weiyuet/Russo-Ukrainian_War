@@ -90,7 +90,7 @@ russia_losses_personnel_long %>%
 ggsave("figures/russia-losses-personnel.png", width = 6, height = 4)
 ```
 
-# Russian Crude Oil Production
+# Russian Crude Oil Production compared to Ukraine, the EU, and OECD
 
 Crude oil production is defined as the quantities of oil extracted from the ground after the removal of inert matter or impurities. It includes crude oil, natural gas liquids (NGLs) and additives. This indicator is measured in thousand tonne of oil equivalent (TOE). 
 
@@ -106,7 +106,7 @@ crude_oil_production_annual %>%
   gg_line(x = TIME,
           y = Value,
           col = LOCATION,
-          title = "Crude Oil Production in (Total, Thousand TOE)",
+          title = "Crude Oil Production (Total, Thousand TOE)",
           x_title = "",
           y_title = "",
           col_legend_place = "r",
