@@ -11,83 +11,70 @@ output:
     fig-width: 8
     fig_height: 6
 ---
-```{r Setup, include=FALSE, warning=FALSE}
+```{r Setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
-library(ggblanket)
-library(reshape2)
-library(scales)
-library(maps)
-```
 
+# Load libraries
+library(tidyverse)
+library(scales)
+```
 Inspired by the data sets collected by [Lena Sokol's Kaggle site](https://www.kaggle.com/code/sokolheavy/2022-ukraine-russia-war-visualization) and [Petro Ivanyuk's Kaggle site.](https://www.kaggle.com/datasets/piterfm/2022-ukraine-russian-war)
   
 Want to understand the costs of war, and the broader picture such as global energy supply and food supply.
 
-![](https://ichef.bbci.co.uk/news/976/cpsprodpb/2CDE/production/_124868411_ukraine_russian_control_areas_map_2x640-nc.png)
+# Russo-Ukrainian War
+
+The Russo-Ukrainian War is an ongoing war between Russia (together with pro-Russian separatist forces) and Ukraine.[e] It was started by Russia in February 2014 following the Ukrainian Revolution of Dignity, and initially focused on the status of Crimea and the Donbas, internationally recognised as part of Ukraine. The first eight years of the conflict included the Russian annexation of Crimea (2014) and the war in Donbas (2014–present) between Ukraine and Russian-backed separatists, as well as naval incidents, cyberwarfare, and political tensions. Following a Russian military build-up on the Russia–Ukraine border from late 2021, the conflict expanded significantly when Russia launched a full-scale invasion of Ukraine on 24 February 2022. From [Wikipedia](https://en.wikipedia.org/wiki/Russo-Ukrainian_War#2022_Russian_invasion_of_Ukraine)  
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/2022_Russian_invasion_of_Ukraine.svg/1920px-2022_Russian_invasion_of_Ukraine.svg.png)
 
 # Russian Casualties
-```{r Russian Casualties CSV}
-#import data
-russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
+
+```{r Russian Casualties}
+# Load data Russian casualties
 russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
-```
 
-```{r Data wrangling, include=FALSE , warning=FALSE}
-#change data to long format
-russia_losses_equipment_long <- melt(russia_losses_equipment, id = "date")
-russia_losses_personnel_long <- melt(russia_losses_personnel, id = "date")
+# Wrangle data change data to long format
+russia_losses_personnel_long <-  russia_losses_personnel %>% 
+  pivot_longer(cols = c(personnel, POW), names_to = "casualties", values_to = "value")
 
-#convert value from chr to dbl
-russia_losses_equipment_long$value <- as.double(as.character(russia_losses_equipment_long$value))
-russia_losses_personnel_long$value <- as.double(as.character(russia_losses_personnel_long$value))
-```
-
-## Equipment
-```{r Russian Losses Equipment plot, warning=FALSE}
-russia_losses_equipment_long %>% 
-  filter(variable == "aircraft" | variable == "helicopter" | variable == "tank" | variable == "APC" | variable == "field artillery" | variable == "drone") %>% 
-  drop_na() %>% 
-  gg_line(x = date,
-          y = value,
-          col = variable,
-          facet = variable,
-          title = "Russian Equipment Lost",
-          x_title = "",
-          y_title = "",
-          col_legend_place = NULL,
-          col_title = "",
-          caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet",
-          facet_scales = "free_y",
-          theme = theme_light()) +
-  scale_color_brewer(type = "qual", palette = 2) +
-  geom_point(size = 0.7) +
-  scale_x_date(expand = c(0,0),
-               labels = label_date_short())
-
-ggsave("figures/russia-losses-equipment.png", width = 6, height = 4)
-```
-
-## Personnel
-```{r Russian Losses Personnel plot, warning=FALSE}
+# Plot Russian casualties
 russia_losses_personnel_long %>% 
-  filter(variable == "personnel" | variable == "POW") %>% 
   drop_na() %>% 
-  gg_line(x = date,
-          y = value,
-          col = variable,
-          title = "Russian Personnel Lost",
-          x_title = "",
-          y_title = "",
-          col_legend_place = "r",
-          col_title = "",
-          caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet",
-          theme = theme_light()) +
-  geom_point(size = 0.7) +
-  scale_x_date(expand = c(0,0),
-               labels = label_date_short())
+  ggplot(aes(x = date, y = value, colour = casualties)) +
+  geom_line() +
+  geom_point(size = 0.7, show.legend = FALSE) +
+  scale_y_log10(labels = label_number(big.mark = ",")) +
+  theme_classic() +
+  theme(legend.position = c(0.8, 0.6)) +
+  scale_colour_brewer(type = "qual", palette = 6) +
+  labs(x = "", y = "", colour = "",
+       title = "Russian Personnel Lost",
+       caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
+```
 
-ggsave("figures/russia-losses-personnel.png", width = 6, height = 4)
+# Russian Equipment Losses
+
+```{r Russian Equipment}
+# Load data Russian equipment
+russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
+
+# Wrangle data change data to long format
+russia_losses_equipment_long <- russia_losses_equipment %>% 
+  select(-"greatest losses direction") %>% 
+  pivot_longer(cols = c(aircraft:`cruise missiles`),
+               names_to = "equipment", values_to = "value")
+
+# Plot Russian equipment losses
+russia_losses_equipment_long %>% 
+  ggplot(aes(x = date, y = value, colour = equipment)) +
+  geom_line(colour = "gray35") +
+  facet_wrap(~equipment, scales = "free") +
+  theme_classic() +
+  theme(legend.position = "none") +
+  labs(x = "", y = "",
+       title = "Russian Equipment Lost",
+       caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
 ```
 
 # Russian Crude Oil Production compared to Ukraine, the EU, and OECD
@@ -96,121 +83,31 @@ Crude oil production is defined as the quantities of oil extracted from the grou
 
 [OECD Data](https://data.oecd.org/energy/crude-oil-production.htm)
 
-```{r Crude Oil Production CSV}
+```{r Russian Crude Oil Production}
+# Load data 
 crude_oil_production_annual <- read_csv("data/crude_oil_production_annual.csv")
-```
 
-```{r Crude Oil Production plot, warning=FALSE}
+# Wrangle data
+# Count distinct number of countries/areas
+#list_of_areas <- crude_oil_production_annual %>% distinct(crude_oil_production_annual$LOCATION) %>% 
+# arrange() %>% tibble()
+
+# Plot Crude oil production in Russia, compared to Ukraine, Saudi Arabia, Norway, and the EU
 crude_oil_production_annual %>% 
-  filter(LOCATION == "RUS" | LOCATION == "UKR" | LOCATION == "EU28" | LOCATION =="OECD") %>% 
-  gg_line(x = TIME,
-          y = Value,
-          col = LOCATION,
-          title = "Crude Oil Production (Total, Thousand TOE)",
-          x_title = "",
-          y_title = "",
-          col_legend_place = "r",
-          col_title = "",
-          caption = "Source: Extended World Energy Balances. OECD\nGraphic: @weiyuet",
-          theme = theme_light()) +
-  geom_point(size = 0.7) +
-  scale_x_continuous(breaks = seq(1960, 2020, 5),
-                     expand = c(0, 0),
-                     labels = label_number(big.mark = "", accuracy = 1))
-
-ggsave("figures/russia-crude-oil-production.png", width = 6, height = 4)
-```
-
-# Ukrainian Refugees
-
-Copy from [Tanya Shapiro](https://github.com/tashapiro/tanya-data-viz/blob/main/ukrainian-refugees/ukranian-refugees-map.R) as practice.
-Data from [UNHCR.](https://data.unhcr.org/en/situations/ukraine/location?secret=unhcrrestricted)
-
-```{r Ukrainian Refugees}
-
-#import map dataframe from maps library
-world_map <- map_data("world")
-
-#https://data.unhcr.org/en/situations/ukraine/location?secret=unhcrrestricted
-countries <- c("Ukraine", "Russian Federation", "Poland", "Republic of Moldova", "Romania", "Slovakia", "Hungary", "Belarus")
-refugees <- c(0,1412429, 1194642, 82700, 83321, 79770, 25800, 9280)
-data <- data.frame(countries, refugees)
-
-#set fill colours per region. Ukraine = blue, Russia & Belarus = red, Neighbouring countries = green, Others = grey
-world_map <- world_map %>% 
-  mutate(fill = case_when(region == "Ukraine" ~ "#00A087",
-                          region %in% c("Russia") ~ "#E64B35",
-                          region %in% countries ~ "#4DBBD5",
-                          TRUE ~ "grey85"))
-
-#create dataframe for points of information
-point_data <- world_map %>% 
-  group_by(region) %>% 
-  #create centroids for lat long per region
-  filter(region %in% countries & region != "Ukraine") %>% 
-  summarise(lat = mean(lat),
-            long = mean(long)) %>% 
-  #append refugee data
-  left_join(data, by = c("region" = "countries")) %>% 
-  mutate(
-    #override Russia centroid, map cut-off
-    lat = replace(lat, region == "Russia", 52),
-    long = replace(long, region == "Russian", 39),
-    #include Ukrainian label coordinates as starting point for migration lines
-    lat_ukr = 49.25,
-    long_ukr = 31.5,
-    #add vjust parameters to adjust text data in plots
-    region_vjust = case_when(refugees > 60000 ~ -.8, TRUE ~ -4),
-    stat_vjust = case_when(refugees > 60000 ~1.1, TRUE ~ 0.1),
-    name_colour = case_when(refugees > 60000 ~ "#000000", TRUE ~ "white")
-  )
-
-#Ukraine label
-text_data <- data.frame(
-  text = "UKRAINE",
-  lat = 49.25,
-  long = 31.5
-)
-
-#import city coordinates from map library
-data(world.cities)
-#filter world cities for Ukranian cities, use top 5 most populous cities
-ukr_cities <- world.cities %>% filter(country.etc == "Ukraine") %>% arrange(-pop) %>% head(5)
-
-ggplot(world_map, aes(long, lat, group = group)) +
-  geom_polygon(aes(fill = fill), colour = "white", size = 0.3) +
-  #migration lines
-  geom_segment(inherit.aes = FALSE, data = point_data, aes(x = long_ukr, xend = long, y = lat_ukr, yend = lat), size = 0.8, linetype = "dotted", colour = "#000000") +
-  #overlay Ukrainian country map
-  geom_polygon(data = world_map %>% filter(region == "Ukraine"), aes(fill = fill), colour = "white", size = 0.3) +
-  #plot refugee bubbles
-  geom_point(inherit.aes = FALSE, data = point_data, aes(long, lat, size = refugees/1000), fill = "gray85", colour = "#579DE2", shape = 21) +
-  #overlay refugee numbers
-  geom_text(inherit.aes = FALSE, data = point_data, aes(long, lat, label = scales::comma(refugees), vjust = stat_vjust), size = 2.5, family = "Arial", colour = "#000000") +
-  #overlay country names
-  geom_text(inherit.aes = FALSE, data = point_data, aes(long, lat, label = toupper(region), vjust = region_vjust, colour = name_colour), size = 2.8, family = "Arial") +
-  #Ukraine label
-  geom_text(inherit.aes = FALSE, data = text_data, aes(long, lat, label = text), size = 5.5, family = "Arial", colour = "#000000") +
-  #Ukrainian cities
-  geom_point(inherit.aes = FALSE, data = ukr_cities, aes(long, lat), colour = "#000000") +
-  geom_text(inherit.aes = FALSE, data = ukr_cities, aes(long, lat, label = name), size = 4, vjust = 1.7, family = "Arial", colour = "#000000") +
-  #set fill and colour to match inputs from dataframe with scale_identity
-  scale_fill_identity() +
-  scale_colour_identity() +
-  scale_size(range = c(9, 37), breaks = c(100, 150, 200, 250, 500), guide = "none") +
-  #adjust world map to focus on Ukraine and neighbouring countries with xlim & ylim
-  coord_map(xlim = c(15, 42),
-            ylim = c(44, 55)) +
-  #add title and themes
-  labs(title = "Number of Ukranian Refugees in Neighbouring Countries",
-       caption = "Data from UNHCR as of 28 June, 2022\nGraphic: @weiyuet") +
-  theme_void() +
-  theme(text = element_text(family = "Arial"),
-        plot.margin = margin(r = 15, l = 15),
-        plot.title = element_text(size = 14, family = "Arial", margin = margin(b = 10)),
-        plot.caption = element_text(size = 10)
-        )
-
-ggsave("figures/ukranian-refugees.png", width = 6, height = 4)
+  filter(LOCATION == "RUS" | LOCATION == "UKR" | LOCATION == "SAU" | LOCATION == "NOR" | LOCATION == "USA" | LOCATION == "EU28") %>%
+  ggplot(aes(x = TIME, y = Value, colour = LOCATION)) +
+  geom_line() +
+  geom_point(size = 0.7, show.legend = "none") +
+  scale_x_continuous(breaks = seq(1965, 2020, 5),
+                     expand = c(0, 0)) +
+  scale_y_log10(labels = label_number(suffix = " TOE", big.mark = ",")) +
+  theme_classic() +
+  theme(legend.title = element_blank(),
+        axis.text.y = element_text(angle = 90)) +
+  scale_colour_brewer(type = "qual", palette = 2) +
+  labs(x = "", y = "",
+       title = "Crude Oil Production (Total)",
+       subtitle = "Measured in thousand tonne of oil equivalent (TOE)",
+       caption = "Source: Extended World Energy Balances. OECD\nGraphic: @weiyuet")
 ```
 
