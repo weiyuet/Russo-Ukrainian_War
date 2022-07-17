@@ -20,7 +20,7 @@ crude_oil_production_annual %>%
                      expand = c(0, 0)) +
   scale_y_log10(labels = label_number(suffix = " TOE", big.mark = ",")) +
   theme_classic() +
-  theme(legend.title = element_blank(),
+  theme(legend.position = "bottom", legend.title = element_blank(),
         axis.text.y = element_text(angle = 90)) +
   scale_colour_brewer(type = "qual", palette = 2) +
   labs(x = "", y = "",

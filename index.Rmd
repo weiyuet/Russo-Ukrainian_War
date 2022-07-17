@@ -87,11 +87,6 @@ Crude oil production is defined as the quantities of oil extracted from the grou
 # Load data 
 crude_oil_production_annual <- read_csv("data/crude_oil_production_annual.csv")
 
-# Wrangle data
-# Count distinct number of countries/areas
-#list_of_areas <- crude_oil_production_annual %>% distinct(crude_oil_production_annual$LOCATION) %>% 
-# arrange() %>% tibble()
-
 # Plot Crude oil production in Russia, compared to Ukraine, Saudi Arabia, Norway, and the EU
 crude_oil_production_annual %>% 
   filter(LOCATION == "RUS" | LOCATION == "UKR" | LOCATION == "SAU" | LOCATION == "NOR" | LOCATION == "USA" | LOCATION == "EU28") %>%
@@ -102,7 +97,7 @@ crude_oil_production_annual %>%
                      expand = c(0, 0)) +
   scale_y_log10(labels = label_number(suffix = " TOE", big.mark = ",")) +
   theme_classic() +
-  theme(legend.title = element_blank(),
+  theme(legend.position = "bottom", legend.title = element_blank(),
         axis.text.y = element_text(angle = 90)) +
   scale_colour_brewer(type = "qual", palette = 2) +
   labs(x = "", y = "",
