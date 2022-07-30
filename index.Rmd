@@ -39,11 +39,11 @@ russia_losses_personnel_long <-  russia_losses_personnel %>%
   pivot_longer(cols = c(personnel, POW), names_to = "casualties", values_to = "value")
 
 # Plot Russian casualties
-russia_losses_personnel_long %>% 
-  drop_na() %>% 
+russia_losses_personnel_long %>%
+  drop_na() %>%
   ggplot(aes(x = date, y = value, colour = casualties)) +
   geom_line() +
-  geom_point(size = 0.7, show.legend = FALSE) +
+  geom_point(size = 0.65, show.legend = FALSE) +
   scale_y_log10(labels = label_number(big.mark = ",")) +
   theme_classic() +
   theme(legend.position = c(0.8, 0.6)) +
@@ -92,7 +92,7 @@ crude_oil_production_annual %>%
   filter(LOCATION == "RUS" | LOCATION == "UKR" | LOCATION == "SAU" | LOCATION == "NOR" | LOCATION == "USA" | LOCATION == "EU28") %>%
   ggplot(aes(x = TIME, y = Value, colour = LOCATION)) +
   geom_line() +
-  geom_point(size = 0.7, show.legend = FALSE) +
+  geom_point(size = 0.65, show.legend = FALSE) +
   scale_x_continuous(breaks = seq(1965, 2020, 5),
                      expand = c(0, 0)) +
   scale_y_log10(labels = label_number(suffix = " TOE", big.mark = ",")) +
