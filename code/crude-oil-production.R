@@ -17,8 +17,10 @@ crude_oil_production_annual %>%
   geom_line() +
   geom_point(size = 0.65, show.legend = FALSE) +
   scale_x_continuous(breaks = seq(1965, 2020, 5),
-                     expand = c(0, 0)) +
-  scale_y_log10(labels = label_number(suffix = " TOE", big.mark = ",")) +
+                     expand = c(0, 0),
+                     limits = c(1965, 2020)) +
+  scale_y_log10(labels = label_number(suffix = " TOE", big.mark = ","),
+                expand = c(0, 0)) +
   theme_classic() +
   theme(legend.position = "right", 
         legend.title = element_blank(),
