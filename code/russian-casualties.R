@@ -20,7 +20,7 @@ russia_losses_personnel_long %>%
   theme(legend.position = c(0.8, 0.6)) +
   scale_colour_brewer(type = "qual", palette = 6) +
   labs(x = "", y = "", colour = "",
-       title = "Russian Personnel Lost",
+       title = "Russian Casualties",
        caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
 
 # Save png
