@@ -12,4 +12,3 @@ russian_casualties = pd.read_csv("data/russia_losses_personnel.csv")
 
 # Load data Russian equipment
 russian_equipment = pd.read_csv("data/russia_losses_equipment.csv")
-
