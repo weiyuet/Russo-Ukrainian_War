@@ -13,13 +13,14 @@ russia_losses_personnel_long <-  russia_losses_personnel %>%
 russia_losses_personnel_long %>%
   drop_na() %>%
   ggplot(aes(x = date, y = value, colour = casualties)) +
-  geom_line() +
-  geom_point(size = 0.6, show.legend = FALSE) +
+  geom_line(show.legend = FALSE) +
+  geom_point(aes(shape = casualties), size = 0.6) +
   scale_y_log10(labels = label_number(big.mark = ",")) +
   theme_classic() +
   theme(legend.position = c(0.8, 0.6)) +
-  scale_colour_brewer(type = "qual", palette = 6) +
-  labs(x = "", y = "", colour = "",
+  scale_colour_grey(start = 0.3, end = 0.6) +
+  labs(x = "", y = "",
+       colour = "", shape = "",
        title = "Russian Casualties",
        caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
 
