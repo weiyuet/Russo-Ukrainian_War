@@ -7,8 +7,8 @@ library(ggsci)
 crude_oil_production_annual <- read_csv("data/crude_oil_production_annual.csv")
 
 # Wrangle data
-# Count distinct number of countries/areas
-list_of_areas <- crude_oil_production_annual %>% distinct(crude_oil_production_annual$LOCATION) %>%
+# Count distinct number of countries/areas in data set
+crude_oil_production_annual %>% distinct(crude_oil_production_annual$LOCATION) %>%
 arrange() %>% tibble()
 
 # Plot Crude oil production in Russia, compared to Ukraine, Saudi Arabia, Norway, and the EU
@@ -16,15 +16,15 @@ crude_oil_production_annual %>%
   filter(LOCATION == "RUS" | LOCATION == "UKR" | LOCATION == "SAU" | LOCATION == "NOR" | LOCATION == "USA" | LOCATION == "EU28") %>%
   ggplot(aes(x = TIME, y = Value, colour = LOCATION)) +
   geom_line() +
-  geom_point(size = 0.65, show.legend = FALSE) +
+  geom_point(size = 0.7, show.legend = FALSE) +
   scale_x_continuous(breaks = seq(1970, 2020, 5),
                      expand = c(0, 0),
                      limits = c(1970, 2020)) +
   scale_y_log10(labels = label_number(suffix = " TOE", big.mark = ","),
                 expand = c(0, 0),
-                limits = c(500, 1000000)) +
+                limits = c(1000, 1000000)) +
   theme_classic() +
-  theme(legend.position = c(0.85, 0.45), 
+  theme(legend.position = c(0.85, 0.4), 
         legend.title = element_blank(),
         axis.text.y = element_text(angle = 90)) +
   scale_colour_jco() +

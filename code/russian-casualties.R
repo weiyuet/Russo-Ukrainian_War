@@ -14,11 +14,11 @@ russia_losses_personnel_long %>%
   drop_na() %>%
   ggplot(aes(x = date, y = value, colour = casualties)) +
   geom_line(show.legend = FALSE) +
-  geom_point(aes(shape = casualties), size = 0.6) +
+  geom_point(aes(shape = casualties), size = 0.7) +
   scale_y_log10(labels = label_number(big.mark = ",")) +
   theme_classic() +
   theme(legend.position = c(0.8, 0.6)) +
-  scale_colour_grey(start = 0.3, end = 0.6) +
+  scale_colour_grey(start = 0.3, end = 0.5) +
   labs(x = "", y = "",
        colour = "", shape = "",
        title = "Russian Casualties",
