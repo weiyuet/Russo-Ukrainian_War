@@ -16,8 +16,10 @@ russia_losses_personnel_long %>%
   geom_line(show.legend = FALSE) +
   geom_point(aes(shape = casualties), size = 0.7) +
   scale_y_log10(labels = label_number(big.mark = ",")) +
+  scale_x_date(date_breaks = "1 month", labels = label_date_short()) +
   theme_classic() +
-  theme(legend.position = c(0.8, 0.6)) +
+  theme(axis.text.y = element_text(angle = 90),
+    legend.position = c(0.8, 0.6)) +
   scale_colour_grey(start = 0.3, end = 0.5) +
   labs(x = "", y = "",
        colour = "", shape = "",
@@ -41,6 +43,7 @@ russia_losses_equipment_long %>%
   ggplot(aes(x = date, y = value, colour = equipment)) +
   geom_line(colour = "gray35") +
   facet_wrap(~equipment, scales = "free") +
+  scale_x_date(date_breaks = "2 month", labels = label_date_short()) +
   theme_classic() +
   theme(legend.position = "none") +
   labs(x = "", y = "",
