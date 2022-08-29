@@ -27,7 +27,7 @@ crude_oil_production_annual %>%
   theme(legend.position = c(0.85, 0.4), 
         legend.title = element_blank(),
         axis.text.y = element_text(angle = 90)) +
-  scale_colour_jco() +
+  scale_colour_uchicago() +
   labs(x = "", y = "",
        title = "Crude Oil Production (Total)",
        subtitle = "Measured in thousand tonne of oil equivalent (TOE)",
