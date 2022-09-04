@@ -17,9 +17,9 @@ russia_losses_personnel_long %>%
   geom_point(aes(shape = casualties), size = 0.7) +
   scale_y_log10(labels = label_number(big.mark = ",")) +
   scale_x_date(date_breaks = "1 month", labels = label_date_short()) +
+  annotate(geom = 'text', x = as.Date('2022-09-03'), y = 59000, label = '49050', size = 3) + #peak
   theme_classic() +
-  theme(axis.text.y = element_text(angle = 90),
-    legend.position = c(0.8, 0.6)) +
+  theme(legend.position = c(0.8, 0.55)) +
   scale_colour_grey(start = 0.3, end = 0.5) +
   labs(x = "", y = "",
        colour = "", shape = "",

@@ -18,7 +18,6 @@ crude_oil_production_annual %>%
   geom_line() +
   geom_point(size = 0.7) +
   scale_x_continuous(breaks = seq(1970, 2020, 5),
-                     expand = c(0, 0),
                      limits = c(1970, 2020)) +
   scale_y_log10(labels = label_number(suffix = " TOE", big.mark = ","),
                 expand = c(0, 0),
@@ -27,7 +26,7 @@ crude_oil_production_annual %>%
   theme(legend.position = c(0.85, 0.4), 
         legend.title = element_blank(),
         axis.text.y = element_text(angle = 90)) +
-  scale_colour_uchicago() +
+  scale_colour_npg() +
   labs(x = "", y = "",
        title = "Crude Oil Production (Total)",
        subtitle = "Measured in thousand tonne of oil equivalent (TOE)",
