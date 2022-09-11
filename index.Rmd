@@ -17,6 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Setup
 library(tidyverse)
 library(scales)
+library(glue)
 library(ggsci)
 ```
 Inspired by the data sets collected by [Lena Sokol's Kaggle site](https://www.kaggle.com/code/sokolheavy/2022-ukraine-russia-war-visualization) and [Petro Ivanyuk's Kaggle site.](https://www.kaggle.com/datasets/piterfm/2022-ukraine-russian-war)
@@ -41,18 +42,20 @@ russia_losses_personnel_long <-  russia_losses_personnel %>%
 russia_losses_personnel_long %>%
   drop_na() %>%
   ggplot(aes(x = date, y = value, colour = casualties)) +
-  geom_line(show.legend = FALSE) +
+  geom_line() +
   geom_point(aes(shape = casualties), size = 0.7) +
   scale_y_log10(labels = label_number(big.mark = ",")) +
   scale_x_date(date_breaks = "1 month", labels = label_date_short()) +
-  annotate(geom = 'text', x = as.Date('2022-09-04'), y = 60000, label = '49500', size = 3) + #peak
+  annotate(geom = "text",
+           x = as.Date(glue("{max(russia_losses_personnel_long$date)}")),
+           y = max(russia_losses_personnel$personnel) + 15000, label = glue("{max(russia_losses_personnel$personnel)}"), size = 3) + # peak
   theme_classic() +
   theme(legend.position = c(0.8, 0.55)) +
   scale_colour_grey(start = 0.2, end = 0.45) +
   labs(x = "", y = "",
-       colour = "", shape = "",
-       title = "Russian Casualties",
-       caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
+    colour = "", shape = "",
+    title = "Russian Casualties",
+    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
 ```
 
 # Russian Equipment Losses
@@ -76,8 +79,8 @@ russia_losses_equipment_long %>%
   theme_classic() +
   theme(legend.position = "none") +
   labs(x = "", y = "",
-       title = "Russian Equipment Lost",
-       caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
+    title = "Russian Equipment Lost",
+    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
 ```
 
 # Russian Crude Oil Production compared to Ukraine, the EU, and OECD
