@@ -44,18 +44,22 @@ russia_losses_personnel_long %>%
   ggplot(aes(x = date, y = value, colour = casualties)) +
   geom_line() +
   geom_point(aes(shape = casualties), size = 0.7) +
-  scale_y_log10(labels = label_number(big.mark = ",")) +
   scale_x_date(date_breaks = "1 month", labels = label_date_short()) +
-  annotate(geom = "text",
-           x = as.Date(glue("{max(russia_losses_personnel_long$date)}")),
-           y = max(russia_losses_personnel$personnel) + 15000, label = glue("{max(russia_losses_personnel$personnel)}"), size = 3) + # peak
+  scale_y_log10(labels = label_number(big.mark = ",")) +
+  annotate(
+    geom = "text",
+    x = as.Date(glue("{max(russia_losses_personnel$date)}")),
+    y = max(russia_losses_personnel$personnel) + 15000, label = glue("{max(russia_losses_personnel$personnel)}"), size = 3
+  ) + # peak
   theme_classic() +
   theme(legend.position = c(0.8, 0.55)) +
   scale_colour_grey(start = 0.2, end = 0.45) +
-  labs(x = "", y = "",
+  labs(
+    x = "", y = "",
     colour = "", shape = "",
-    title = "Russian Casualties",
-    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
+    title = glue("Russian Casualties as of {max(russia_losses_personnel$date)}"),
+    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet"
+  )
 ```
 
 # Russian Equipment Losses
@@ -76,11 +80,14 @@ russia_losses_equipment_long %>%
   geom_line(colour = "gray35") +
   facet_wrap(~equipment, scales = "free") +
   scale_x_date(date_breaks = "2 month", labels = label_date_short()) +
+  scale_y_continuous(labels = label_number(big.mark = ",")) +
   theme_classic() +
   theme(legend.position = "none") +
-  labs(x = "", y = "",
-    title = "Russian Equipment Lost",
-    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
+  labs(
+    x = "", y = "",
+    title = glue("Russian Equipment Lost as of {max(russia_losses_equipment$date)}"),
+    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet"
+  )
 
 # Plot Russian equipment losses cumulative
 russia_losses_equipment_long %>%
