@@ -7,10 +7,10 @@ Initially inspired by [`Lena Sokol's Kaggle`](https://www.kaggle.com/code/sokolh
 War casualty data updated daily from [`Petro Ivanyuk's Kaggle`](https://www.kaggle.com/datasets/piterfm/2022-ukraine-russian-war). All data is official and organised by Petro.
 
 Russian casualties
-[Russian casualties](https://github.com/weiyuet/russo-ukrainian-war/blob/main/figures/russia-losses-personnel.png)
+![Russian casualties](https://github.com/weiyuet/russo-ukrainian-war/blob/main/figures/russia-losses-personnel.png)
 
 Russian equipment lost
-[Russian equipment lost](https://github.com/weiyuet/russo-ukrainian-war/blob/main/figures/russia-losses-equipment.png)
+![Russian equipment lost](https://github.com/weiyuet/russo-ukrainian-war/blob/main/figures/russia-losses-equipment.png)
 
 Russian equipment lost (cumulative)
-[Russian equipment lost (cumulative)](https://github.com/weiyuet/russo-ukrainian-war/blob/main/figures/russia-losses-equipment-cumulative.png)
+![Russian equipment lost (cumulative)](https://github.com/weiyuet/russo-ukrainian-war/blob/main/figures/russia-losses-equipment-cumulative.png)
