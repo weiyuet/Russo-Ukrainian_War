@@ -68,14 +68,14 @@ ggsave("figures/russia-losses-equipment.png", width = 8, height = 8)
 # Plot Russian equipment losses cumulative
 russia_losses_equipment_long %>%
   group_by(equipment) %>%
-  summarise(cumulative_total = sum(value, na.rm = TRUE)) %>%
+  summarise(cumulative_total = max(value, na.rm = TRUE)) %>%
   mutate(equipment = fct_reorder(equipment, cumulative_total)) %>%
   ggplot(aes(x = cumulative_total, y = equipment)) +
   geom_col(colour = "gray10", fill = "gray35") +
   scale_x_continuous(
     labels = label_number(big.mark = ","),
-    breaks = seq(0, 650000, 100000),
-    limits = c(0, 650000),
+    breaks = seq(0, 5000, 1000),
+    limits = c(0, 5000),
     expand = c(0, 0)
   ) +
   theme_classic() +

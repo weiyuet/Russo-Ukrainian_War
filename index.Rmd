@@ -26,7 +26,8 @@ Inspired by the data sets collected by [Lena Sokol's Kaggle site](https://www.ka
 
 The Russo-Ukrainian War is an ongoing war between Russia (together with pro-Russian separatist forces) and Ukraine.[e] It was started by Russia in February 2014 following the Ukrainian Revolution of Dignity, and initially focused on the status of Crimea and the Donbas, internationally recognised as part of Ukraine. The first eight years of the conflict included the Russian annexation of Crimea (2014) and the war in Donbas (2014–present) between Ukraine and Russian-backed separatists, as well as naval incidents, cyberwarfare, and political tensions. Following a Russian military build-up on the Russia–Ukraine border from late 2021, the conflict expanded significantly when Russia launched a full-scale invasion of Ukraine on 24 February 2022. From [Wikipedia](https://en.wikipedia.org/wiki/Russo-Ukrainian_War#2022_Russian_invasion_of_Ukraine)  
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/2022_Russian_invasion_of_Ukraine.svg/1920px-2022_Russian_invasion_of_Ukraine.svg.png)
+
+![](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.barrons.com%2Fasset%2Fexternal-media%2Fafp%2FAFP4424630851760464594004114486050974977423-ukraine-russia-conflict-1.jpg&f=1&nofb=1)
 
 # Russian Casualties
 
@@ -92,14 +93,14 @@ russia_losses_equipment_long %>%
 # Plot Russian equipment losses cumulative
 russia_losses_equipment_long %>%
   group_by(equipment) %>%
-  summarise(cumulative_total = sum(value, na.rm = TRUE)) %>%
+  summarise(cumulative_total = max(value, na.rm = TRUE)) %>%
   mutate(equipment = fct_reorder(equipment, cumulative_total)) %>%
   ggplot(aes(x = cumulative_total, y = equipment)) +
   geom_col(colour = "gray10", fill = "gray35") +
   scale_x_continuous(
     labels = label_number(big.mark = ","),
-    breaks = seq(0, 650000, 100000),
-    limits = c(0, 650000),
+    breaks = seq(0, 5000, 1000),
+    limits = c(0, 5000),
     expand = c(0, 0)
   ) +
   theme_classic() +
