@@ -81,6 +81,25 @@ russia_losses_equipment_long %>%
   labs(x = "", y = "",
     title = "Russian Equipment Lost",
     caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
+
+# Plot Russian equipment losses cumulative
+russia_losses_equipment_long %>%
+  group_by(equipment) %>%
+  summarise(cumulative_total = sum(value, na.rm = TRUE)) %>%
+  mutate(equipment = fct_reorder(equipment, cumulative_total)) %>%
+  ggplot(aes(x = cumulative_total, y = equipment)) +
+  geom_col(colour = "gray10", fill = "gray35") +
+  scale_x_continuous(
+    labels = label_number(big.mark = ","),
+    breaks = seq(0, 650000, 100000),
+    limits = c(0, 650000),
+    expand = c(0, 0)
+  ) +
+  theme_classic() +
+  labs(
+    x = "", y = "",
+    title = glue("Russian Equipment Lost (Cumulative) as of {max(russia_losses_equipment$date)}"),
+    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
 ```
 
 # Russian Crude Oil Production compared to Ukraine, the EU, and OECD
