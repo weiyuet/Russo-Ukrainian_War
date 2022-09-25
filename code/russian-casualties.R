@@ -6,7 +6,7 @@ library(glue)
 # Load data Russian casualties
 russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
 
-# Wrangle data change data to long format
+# Change data to long format
 russia_losses_personnel_long <- russia_losses_personnel %>%
   pivot_longer(cols = c(personnel, POW), names_to = "casualties", values_to = "value")
 
@@ -29,7 +29,7 @@ russia_losses_personnel_long %>%
   labs(
     x = "", y = "",
     colour = "", shape = "",
-    title = glue("Russian Casualties as of {max(russia_losses_personnel$date)}"),
+    title = glue("Russian Casualties (updated {max(russia_losses_personnel$date)})"),
     caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet"
   )
 
@@ -39,7 +39,7 @@ ggsave("figures/russia-losses-personnel.png", width = 6, height = 4)
 # Load data Russian equipment
 russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
 
-# Wrangle data change data to long format
+# Change data to long format
 russia_losses_equipment_long <- russia_losses_equipment %>%
   select(-"greatest losses direction") %>%
   pivot_longer(
@@ -52,13 +52,14 @@ russia_losses_equipment_long %>%
   ggplot(aes(x = date, y = value, colour = equipment)) +
   geom_line(colour = "gray35") +
   facet_wrap(~equipment, scales = "free") +
-  scale_x_date(date_breaks = "2 month", labels = label_date_short()) +
+  scale_x_date(date_breaks = "2 month", labels = label_date_short(),
+               expand = c(0,0)) +
   scale_y_continuous(labels = label_number(big.mark = ",")) +
   theme_classic() +
   theme(legend.position = "none") +
   labs(
     x = "", y = "",
-    title = glue("Russian Equipment Lost as of {max(russia_losses_equipment$date)}"),
+    title = glue("Russian Equipment Lost (updated {max(russia_losses_equipment$date)})"),
     caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet"
   )
 
@@ -81,7 +82,7 @@ russia_losses_equipment_long %>%
   theme_classic() +
   labs(
     x = "", y = "",
-    title = glue("Russian Equipment Lost (Cumulative) as of {max(russia_losses_equipment$date)}"),
+    title = glue("Russian Equipment Lost - Cumulative (updated {max(russia_losses_equipment$date)})"),
     caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
 
 # Save png
