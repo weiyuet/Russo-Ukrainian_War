@@ -35,7 +35,7 @@ The Russo-Ukrainian War is an ongoing war between Russia (together with pro-Russ
 # Load data Russian casualties
 russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
 
-# Wrangle data change data to long format
+# Change data to long format
 russia_losses_personnel_long <-  russia_losses_personnel %>% 
   pivot_longer(cols = c(personnel, POW), names_to = "casualties", values_to = "value")
 
@@ -58,8 +58,8 @@ russia_losses_personnel_long %>%
   labs(
     x = "", y = "",
     colour = "", shape = "",
-    title = glue("Russian Casualties as of {max(russia_losses_personnel$date)}"),
-    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet"
+    title = glue("Russian Casualties (updated {max(russia_losses_personnel$date)})"),
+    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet"
   )
 ```
 
@@ -69,7 +69,7 @@ russia_losses_personnel_long %>%
 # Load data Russian equipment
 russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
 
-# Wrangle data change data to long format
+# Change data to long format
 russia_losses_equipment_long <- russia_losses_equipment %>% 
   select(-"greatest losses direction") %>% 
   pivot_longer(cols = c(aircraft:`cruise missiles`),
@@ -80,14 +80,15 @@ russia_losses_equipment_long %>%
   ggplot(aes(x = date, y = value, colour = equipment)) +
   geom_line(colour = "gray35") +
   facet_wrap(~equipment, scales = "free") +
-  scale_x_date(date_breaks = "2 month", labels = label_date_short()) +
+  scale_x_date(date_breaks = "2 month", labels = label_date_short(),
+               expand = c(0,0)) +
   scale_y_continuous(labels = label_number(big.mark = ",")) +
   theme_classic() +
   theme(legend.position = "none") +
   labs(
     x = "", y = "",
-    title = glue("Russian Equipment Lost as of {max(russia_losses_equipment$date)}"),
-    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet"
+    title = glue("Russian Equipment Lost (updated {max(russia_losses_equipment$date)})"),
+    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet"
   )
 
 # Plot Russian equipment losses cumulative
@@ -106,11 +107,11 @@ russia_losses_equipment_long %>%
   theme_classic() +
   labs(
     x = "", y = "",
-    title = glue("Russian Equipment Lost (Cumulative) as of {max(russia_losses_equipment$date)}"),
-    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
+    title = glue("Russian Equipment Lost - Cumulative (updated {max(russia_losses_equipment$date)})"),
+    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
 ```
 
-# Russian Crude Oil Production compared to Ukraine, the EU, and OECD
+# Russian Crude Oil Production compared to Ukraine, Saudi Arabia, Norway, the USA, and the EU
 
 Crude oil production is defined as the quantities of oil extracted from the ground after the removal of inert matter or impurities. It includes crude oil, natural gas liquids (NGLs) and additives. This indicator is measured in thousand tonne of oil equivalent (TOE). 
 
@@ -121,8 +122,10 @@ Crude oil production is defined as the quantities of oil extracted from the grou
 crude_oil_production_annual <- read_csv("data/crude_oil_production_annual.csv")
 
 # Plot Crude oil production in Russia, compared to Ukraine, Saudi Arabia, Norway, and the EU
+countries_to_include <- c("RUS", "UKR", "SAU", "NOR", "USA", "EU28")
+
 crude_oil_production_annual %>% 
-  filter(LOCATION == "RUS" | LOCATION == "UKR" | LOCATION == "SAU" | LOCATION == "NOR" | LOCATION == "USA" | LOCATION == "EU28") %>%
+  filter(LOCATION %in% countries_to_include) %>%
   ggplot(aes(x = TIME, y = Value, colour = LOCATION)) +
   geom_line() +
   geom_point(size = 0.7) +
@@ -137,8 +140,7 @@ crude_oil_production_annual %>%
         axis.text.y = element_text(angle = 90)) +
   scale_colour_npg() +
   labs(x = "", y = "",
-       title = "Crude Oil Production (Total)",
-       subtitle = "Measured in thousand tonne of oil equivalent (TOE)",
-       caption = "Source: Extended World Energy Balances. OECD\nGraphic: @weiyuet")
+       title = "Crude Oil Production (Total Annual)",
+       subtitle = "Measured in thousand tonne of oil equivalent (TOE) | y-axis log scale",
+       caption = "Data: Extended World Energy Balances, OECD\nGraphic: @weiyuet")
 ```
-

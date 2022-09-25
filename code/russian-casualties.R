@@ -30,7 +30,7 @@ russia_losses_personnel_long %>%
     x = "", y = "",
     colour = "", shape = "",
     title = glue("Russian Casualties (updated {max(russia_losses_personnel$date)})"),
-    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet"
+    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet"
   )
 
 # Save png
@@ -60,7 +60,7 @@ russia_losses_equipment_long %>%
   labs(
     x = "", y = "",
     title = glue("Russian Equipment Lost (updated {max(russia_losses_equipment$date)})"),
-    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet"
+    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet"
   )
 
 # Save png
@@ -83,7 +83,7 @@ russia_losses_equipment_long %>%
   labs(
     x = "", y = "",
     title = glue("Russian Equipment Lost - Cumulative (updated {max(russia_losses_equipment$date)})"),
-    caption = "Source: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
+    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine\nGraphic: @weiyuet")
 
 # Save png
 ggsave("figures/russia-losses-equipment-cumulative.png", width = 8, height = 5)
