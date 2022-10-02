@@ -30,7 +30,7 @@ crude_oil_production_annual %>%
   labs(x = "", y = "",
        title = "Crude Oil Production (Total Annual)",
        subtitle = "Measured in thousand tonne of oil equivalent (TOE) | y-axis log scale",
-       caption = "Data: Extended World Energy Balances, OECD\nGraphic: @weiyuet")
+       caption = "Data: Extended World Energy Balances, OECD | Graphic: @weiyuet")
   
-# Save png
+# Save image
 ggsave("figures/russia-crude-oil-production.png", width = 8, height = 6)

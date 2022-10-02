@@ -21,7 +21,7 @@ russia_losses_personnel_long %>%
   annotate(
     geom = "text",
     x = as.Date(glue("{max(russia_losses_personnel$date)}")),
-    y = max(russia_losses_personnel$personnel) + 15000, label = glue("{max(russia_losses_personnel$personnel)}"), size = 3
+    y = max(russia_losses_personnel$personnel) + 20000, label = glue("{max(russia_losses_personnel$personnel)}"), size = 3
   ) + # peak
   theme_classic() +
   theme(legend.position = c(0.8, 0.55)) +
