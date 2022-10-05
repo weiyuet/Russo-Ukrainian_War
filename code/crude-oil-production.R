@@ -18,12 +18,13 @@ crude_oil_production_annual %>%
   geom_line() +
   geom_point(size = 0.7) +
   scale_x_continuous(breaks = seq(1970, 2020, 5),
-                     limits = c(1970, 2020)) +
+                     limits = c(1970, 2020),
+                     expand = c(0.01, 0)) +
   scale_y_log10(labels = label_number(suffix = " TOE", big.mark = ","),
-                expand = c(0, 0),
-                limits = c(1000, 1000000)) +
+                limits = c(1000, 1000000),
+                expand = c(0, 0)) +
   theme_classic() +
-  theme(legend.position = c(0.85, 0.4), 
+  theme(legend.position = c(0.9, 0.35), 
         legend.title = element_blank(),
         axis.text.y = element_text(angle = 90)) +
   scale_colour_npg() +
