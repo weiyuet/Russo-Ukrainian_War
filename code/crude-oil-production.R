@@ -1,13 +1,14 @@
 # Setup
 library(tidyverse)
 library(scales)
-library(ggsci)
+library(NatParksPalettes)
 
 # Load data 
 crude_oil_production_annual <- read_csv("data/crude_oil_production_annual.csv")
 
 # Count distinct number of countries/areas in data set
-crude_oil_production_annual %>% distinct(crude_oil_production_annual$LOCATION) %>% count()
+crude_oil_production_annual %>%
+  distinct(crude_oil_production_annual$LOCATION) %>% count()
 
 # Plot Crude oil production in Russia, compared to Ukraine, Saudi Arabia, Norway, the USA, and the EU
 countries_to_include <- c("RUS", "UKR", "SAU", "NOR", "USA", "EU28")
@@ -27,7 +28,7 @@ crude_oil_production_annual %>%
   theme(legend.position = c(0.9, 0.35), 
         legend.title = element_blank(),
         axis.text.y = element_text(angle = 90)) +
-  scale_colour_npg() +
+  scale_colour_manual(values = natparks.pals("Yellowstone", 6)) +
   labs(x = "", y = "",
        title = "Crude Oil Production (Total Annual)",
        subtitle = "Measured in thousand tonne of oil equivalent (TOE) | y-axis log scale",
