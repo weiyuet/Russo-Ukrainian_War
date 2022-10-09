@@ -6,7 +6,7 @@ Wong Wei Yuet 2022-05-26
 
   - War casualty data updated daily from [`Petro Ivanyuk's Kaggle`](https://www.kaggle.com/datasets/piterfm/2022-ukraine-russian-war). All data is official and put together by Petro
 
-Updated: 2022-10-06
+Updated: 2022-10-07
 
 ## Summary of Conflict
 
@@ -23,6 +23,6 @@ The Russo-Ukrainian War is an ongoing war between Russia (together with pro-Russ
 
 ## Russian Crude Oil Production compared to Ukraine, Saudi Arabia, Norway, the USA, and the EU
 ![](https://github.com/weiyuet/russo-ukrainian-war/blob/main/figures/russia-crude-oil-production.png)
-Crude oil production is defined as the quantities of oil extracted from the ground after the removal of inert matter or impurities. It includes crude oil, natural gas liquids (NGLs) and additives. This indicator is measured in thousand tonne of oil equivalent (TOE).
+Crude oil production is defined as the quantities of oil extracted from the ground after the removal of inert matter or impurities. It includes crude oil, natural gas liquids (NGLs) and additives. This indicator is measured in thousand tonne of oil equivalent (toe). Crude oil is a mineral oil consisting of a mixture of hydrocarbons of natural origin, yellow to black in colour, and of variable density and viscosity. NGLs are the liquid or liquefied hydrocarbons produced in the manufacture, purification and stabilisation of natural gas. Additives are non-hydrocarbon substances added to or blended with a product to modify its properties, for example, to improve its combustion characteristics (e.g. MTBE and tetraethyl lead). [OECD](https://data.oecd.org/energy/crude-oil-production.htm#indicator-chart)
 
 EOL
