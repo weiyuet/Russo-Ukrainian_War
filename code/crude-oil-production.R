@@ -21,7 +21,7 @@ crude_oil_production_annual %>%
   scale_x_continuous(breaks = seq(1970, 2020, 5),
                      limits = c(1970, 2020),
                      expand = c(0.01, 0)) +
-  scale_y_log10(labels = label_number(suffix = " TOE", big.mark = ","),
+  scale_y_log10(labels = label_number(suffix = " toe", big.mark = ","),
                 limits = c(1000, 1000000),
                 expand = c(0, 0)) +
   theme_classic() +
@@ -31,7 +31,7 @@ crude_oil_production_annual %>%
   scale_colour_manual(values = natparks.pals("Yellowstone", 6)) +
   labs(x = "", y = "",
        title = "Crude Oil Production (Total Annual)",
-       subtitle = "Measured in thousand tonne of oil equivalent (TOE) | y-axis log scale",
+       subtitle = "Measured in thousand tonne of oil equivalent (toe) | y-axis log scale",
        caption = "Data: Extended World Energy Balances, OECD | Graphic: @weiyuet")
   
 # Save image
