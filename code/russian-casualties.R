@@ -16,8 +16,10 @@ russia_losses_personnel_long %>%
   ggplot(aes(x = date, y = value, colour = casualties)) +
   geom_line() +
   geom_point(aes(shape = casualties), size = 0.7) +
-  scale_x_date(date_breaks = "1 month", labels = label_date_short()) +
-  scale_y_log10(labels = label_number(big.mark = ",")) +
+  scale_x_date(date_breaks = "1 month",
+               labels = label_date_short()) +
+  scale_y_log10(breaks = c(0, 500, 1000, 5000, 10000, 30000, 40000, 60000, 100000),
+                labels = label_number(big.mark = ",")) +
   annotate(
     geom = "text",
     x = as.Date(glue("{max(russia_losses_personnel$date)}")),
@@ -30,6 +32,7 @@ russia_losses_personnel_long %>%
     x = "", y = "",
     colour = "", shape = "",
     title = glue("Russian Casualties (updated {max(russia_losses_personnel$date)})"),
+    subtitle = "(y-axis log scale)",
     caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine | Graphic: @weiyuet"
   )
 
@@ -75,9 +78,9 @@ russia_losses_equipment_long %>%
   geom_col(colour = "gray10", fill = "gray35") +
   scale_x_continuous(
     labels = label_number(big.mark = ","),
-    breaks = seq(0, 5500, 1000),
-    limits = c(0, 5500),
-    expand = c(0, 0)
+    breaks = seq(0, 6000, 1000),
+    limits = c(0, 6000),
+    expand = c(0.01, 0)
   ) +
   theme_classic() +
   labs(
