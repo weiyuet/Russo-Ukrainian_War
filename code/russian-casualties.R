@@ -18,7 +18,7 @@ russia_losses_personnel_long %>%
   geom_point(aes(shape = casualties), size = 0.7) +
   scale_x_date(date_breaks = "1 month",
                labels = label_date_short()) +
-  scale_y_log10(breaks = c(0, 500, 1000, 5000, 10000, 30000, 40000, 60000, 100000),
+  scale_y_log10(breaks = c(0, 300, 1000, 3000, 10000, 30000, 60000, 100000),
                 labels = label_number(big.mark = ",")) +
   annotate(
     geom = "text",
@@ -78,8 +78,8 @@ russia_losses_equipment_long %>%
   geom_col(colour = "gray10", fill = "gray35") +
   scale_x_continuous(
     labels = label_number(big.mark = ","),
-    breaks = seq(0, 6000, 1000),
-    limits = c(0, 6000),
+    breaks = seq(0, 5500, 500),
+    limits = c(0, 5500),
     expand = c(0.01, 0)
   ) +
   theme_classic() +
