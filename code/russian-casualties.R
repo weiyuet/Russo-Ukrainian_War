@@ -6,7 +6,7 @@ library(glue)
 # Load data Russian casualties
 russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
 
-# Change data to long format
+# Data to tidy format
 russia_losses_personnel_long <- russia_losses_personnel %>%
   pivot_longer(cols = c(personnel, POW), names_to = "casualties", values_to = "value")
 
@@ -37,12 +37,12 @@ russia_losses_personnel_long %>%
   )
 
 # Save image
-ggsave("figures/russia-losses-personnel.png", width = 6, height = 4)
+ggsave("figures/russia-losses-personnel.png", width = 6.5, height = 4.5)
 
 # Load data Russian equipment
 russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
 
-# Change data to long format
+# Data to tidy format
 russia_losses_equipment_long <- russia_losses_equipment %>%
   select(-"greatest losses direction") %>%
   pivot_longer(
