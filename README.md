@@ -4,9 +4,9 @@ Wong Wei Yuet 2022-05-26
 
   - First Inspired by [`Lena Sokol's Kaggle`](https://www.kaggle.com/code/sokolheavy/2022-ukraine-russia-war-visualization)
 
-  - War casualty data updated daily from [`Petro Ivanyuk's Kaggle`](https://www.kaggle.com/datasets/piterfm/2022-ukraine-russian-war). All data is official and put together by Petro
+  - War casualty data updated daily from [`Petro Ivanyuk's Kaggle`](https://www.kaggle.com/datasets/piterfm/2022-ukraine-russian-war). All data is official and put together by `Petro`
 
-Updated: 2022-10-14
+Updated: 2022-10-15
 
 ## Summary of Conflict
 

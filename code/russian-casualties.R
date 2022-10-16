@@ -8,7 +8,9 @@ russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
 
 # Data to tidy format
 russia_losses_personnel_long <- russia_losses_personnel %>%
-  pivot_longer(cols = c(personnel, POW), names_to = "casualties", values_to = "value")
+  pivot_longer(cols = c(personnel, POW), 
+               names_to = "casualties", 
+               values_to = "value")
 
 # Plot Russian casualties
 russia_losses_personnel_long %>%
@@ -23,7 +25,9 @@ russia_losses_personnel_long %>%
   annotate(
     geom = "text",
     x = as.Date(glue("{max(russia_losses_personnel$date)}")),
-    y = max(russia_losses_personnel$personnel) + 20000, label = glue("{max(russia_losses_personnel$personnel)}"), size = 3
+    y = max(russia_losses_personnel$personnel) + 20000,
+    label = glue("{max(russia_losses_personnel$personnel)}"),
+    size = 3
   ) + # peak
   theme_classic() +
   theme(legend.position = c(0.8, 0.55)) +
@@ -47,7 +51,8 @@ russia_losses_equipment_long <- russia_losses_equipment %>%
   select(-"greatest losses direction") %>%
   pivot_longer(
     cols = c(aircraft:`cruise missiles`),
-    names_to = "equipment", values_to = "value"
+    names_to = "equipment", 
+    values_to = "value"
   )
 
 # Plot Russian equipment losses
@@ -55,7 +60,8 @@ russia_losses_equipment_long %>%
   ggplot(aes(x = date, y = value, colour = equipment)) +
   geom_step(colour = "gray35") +
   facet_wrap(~equipment, scales = "free") +
-  scale_x_date(date_breaks = "2 months", labels = label_date_short(),
+  scale_x_date(date_breaks = "2 months", 
+               labels = label_date_short(),
                expand = c(0,0)) +
   scale_y_continuous(labels = label_number(big.mark = ",")) +
   theme_classic() +
