@@ -2,6 +2,7 @@
 library(tidyverse)
 library(scales)
 library(glue)
+library(paletteer)
 
 # Load data Russian casualties
 russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
@@ -16,22 +17,21 @@ russia_losses_personnel_long <- russia_losses_personnel %>%
 russia_losses_personnel_long %>%
   drop_na() %>%
   ggplot(aes(x = date, y = value, colour = casualties)) +
-  geom_line() +
-  geom_point(aes(shape = casualties), size = 0.7) +
+  geom_step(size = 1.1) +
   scale_x_date(date_breaks = "1 month",
                labels = label_date_short()) +
   scale_y_log10(breaks = c(0, 300, 1000, 3000, 10000, 30000, 60000, 100000),
                 labels = label_number(big.mark = ",")) +
+  scale_colour_paletteer_d("dutchmasters::milkmaid") +
   annotate(
     geom = "text",
     x = as.Date(glue("{max(russia_losses_personnel$date)}")),
     y = max(russia_losses_personnel$personnel) + 20000,
     label = glue("{max(russia_losses_personnel$personnel)}"),
     size = 3
-  ) + # peak
+  ) +
   theme_classic() +
   theme(legend.position = c(0.8, 0.55)) +
-  scale_colour_grey(start = 0.2, end = 0.45) +
   labs(
     x = "", y = "",
     colour = "", shape = "",
