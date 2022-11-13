@@ -1,19 +1,27 @@
-# Setup
+###########################
+# 2022 Ukraine Russia War #
+###########################
+
+#### Setup ####
 library(tidyverse)
 library(scales)
 library(glue)
 library(paletteer)
 
-# Load data Russian casualties
+######################
+# Russian Casualties #
+######################
+
+#### Load data ####
 russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
 
-# Data to tidy format
+#### Data to tidy format ####
 russia_losses_personnel_long <- russia_losses_personnel %>%
   pivot_longer(cols = c(personnel, POW), 
                names_to = "casualties", 
                values_to = "value")
 
-# Plot Russian casualties
+#### Plot ####
 russia_losses_personnel_long %>%
   drop_na() %>%
   ggplot(aes(x = date, y = value, colour = casualties)) +
@@ -22,7 +30,7 @@ russia_losses_personnel_long %>%
                labels = label_date_short()) +
   scale_y_log10(breaks = c(0, 300, 1000, 3000, 10000, 30000, 100000),
                 labels = label_number(big.mark = ",")) +
-  scale_colour_paletteer_d("dutchmasters::milkmaid") +
+  scale_colour_paletteer_d("ggsci::default_jco") +
   annotate(
     geom = "text",
     x = as.Date(glue("{max(russia_losses_personnel$date)}")),
@@ -40,13 +48,17 @@ russia_losses_personnel_long %>%
     caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine | Graphic: @weiyuet"
   )
 
-# Save image
+#### Save image ####
 ggsave("figures/russia-losses-personnel.png", width = 6.5, height = 4.5)
 
-# Load data Russian equipment
+#####################
+# Russian Equipment #
+#####################
+
+#### Load data ####
 russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
 
-# Data to tidy format
+#### Data to tidy format ####
 russia_losses_equipment_long <- russia_losses_equipment %>%
   select(-"greatest losses direction") %>%
   pivot_longer(
@@ -55,7 +67,7 @@ russia_losses_equipment_long <- russia_losses_equipment %>%
     values_to = "value"
   )
 
-# Plot Russian equipment losses
+#### Plot ####
 russia_losses_equipment_long %>%
   ggplot(aes(x = date, y = value, colour = equipment)) +
   geom_step(colour = "gray35") +
@@ -72,10 +84,14 @@ russia_losses_equipment_long %>%
     caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine | Graphic: @weiyuet"
   )
 
-# Save image
+#### Save image ####
 ggsave("figures/russia-losses-equipment.png", width = 8, height = 8)
 
-# Plot Russian equipment losses cumulative
+################################
+# Russian Equipment Cumulative #
+################################
+
+#### Plot ####
 russia_losses_equipment_long %>%
   group_by(equipment) %>%
   summarise(cumulative_total = max(value, na.rm = TRUE)) %>%
@@ -85,7 +101,6 @@ russia_losses_equipment_long %>%
   scale_x_continuous(
     labels = label_number(big.mark = ","),
     breaks = seq(0, 6000, 500),
-    limits = c(0, 6000),
     expand = c(0.01, 0)
   ) +
   theme_classic() +
@@ -94,5 +109,5 @@ russia_losses_equipment_long %>%
     title = glue("Russian Equipment Lost - Cumulative (updated {max(russia_losses_equipment$date)})"),
     caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine | Graphic: @weiyuet")
 
-# Save image
+#### Save image ####
 ggsave("figures/russia-losses-equipment-cumulative.png", width = 8, height = 5)
