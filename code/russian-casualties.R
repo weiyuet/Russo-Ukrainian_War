@@ -72,7 +72,7 @@ russia_losses_equipment_long %>%
   ggplot(aes(x = date, y = value, colour = equipment)) +
   geom_step(colour = "gray35") +
   facet_wrap(~equipment, scales = "free") +
-  scale_x_date(date_breaks = "2 months", 
+  scale_x_date(date_breaks = "3 months", 
                labels = label_date_short(),
                expand = c(0,0)) +
   scale_y_continuous(labels = label_number(big.mark = ",")) +
