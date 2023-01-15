@@ -21,7 +21,7 @@ russia_losses_personnel_long <- russia_losses_personnel %>%
                names_to = "casualties", 
                values_to = "value")
 
-#### Plot ####
+#### Visualize ####
 russia_losses_personnel_long %>%
   drop_na() %>%
   ggplot(aes(x = date,
@@ -70,17 +70,17 @@ russia_losses_equipment_long <- russia_losses_equipment %>%
     values_to = "value"
   )
 
-#### Plot ####
+#### Visualize ####
 russia_losses_equipment_long %>%
   ggplot(aes(x = date,
              y = value,
              colour = equipment)) +
   geom_step(colour = "gray35") +
-  facet_wrap(~equipment, scales = "free") +
+  facet_wrap(~equipment,
+             scales = "free") +
   scale_x_date(date_breaks = "2 months", 
                labels = label_date_short(),
                expand = c(0,0)) +
-  scale_y_continuous(labels = label_number(big.mark = ",")) +
   theme_classic() +
   theme(legend.position = "none") +
   labs(
@@ -97,10 +97,10 @@ ggsave("figures/russia-losses-equipment.png", width = 8, height = 8)
 # Russian Equipment Cumulative #
 ################################
 
-#### Plot ####
+#### Visualize ####
 russia_losses_equipment_long %>%
   group_by(equipment) %>%
-  summarise(cumulative_total = max(value, na.rm = TRUE)) %>%
+  summarize(cumulative_total = max(value, na.rm = TRUE)) %>%
   mutate(equipment = fct_reorder(equipment, cumulative_total)) %>%
   ggplot(aes(x = cumulative_total,
              y = equipment)) +
@@ -116,7 +116,8 @@ russia_losses_equipment_long %>%
     x = "",
     y = "",
     title = glue("Russian Equipment Lost - Cumulative (updated {max(russia_losses_equipment$date)})"),
-    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine | Graphic: @weiyuet")
+    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine | Graphic: @weiyuet"
+  )
 
 #### Save image ####
 ggsave("figures/russia-losses-equipment-cumulative.png", width = 8, height = 5)
