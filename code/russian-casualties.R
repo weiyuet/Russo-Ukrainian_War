@@ -27,7 +27,7 @@ russia_losses_personnel_long %>%
   ggplot(aes(x = date,
              y = value,
              colour = casualties)) +
-  geom_step(size = 1.1) +
+  geom_step(linewidth = 1.1) +
   scale_x_date(date_breaks = "1 month",
                labels = label_date_short()) +
   scale_y_log10(breaks = c(0, 300, 1000, 3000, 10000, 30000, 100000),
@@ -36,7 +36,7 @@ russia_losses_personnel_long %>%
   annotate(
     geom = "text",
     x = as.Date(glue("{max(russia_losses_personnel$date)}")),
-    y = max(russia_losses_personnel$personnel) + 35000,
+    y = max(russia_losses_personnel$personnel) + 40000,
     label = glue("{max(russia_losses_personnel$personnel)}"),
     size = 3
   ) +
