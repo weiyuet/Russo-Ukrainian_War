@@ -17,8 +17,8 @@ russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
 
 #### Data to tidy format ####
 russia_losses_personnel_long <- russia_losses_personnel %>%
-  pivot_longer(cols = c(personnel, POW), 
-               names_to = "casualties", 
+  pivot_longer(cols = c(personnel, POW),
+               names_to = "casualties",
                values_to = "value")
 
 #### Visualize ####
@@ -28,7 +28,7 @@ russia_losses_personnel_long %>%
              y = value,
              colour = casualties)) +
   geom_step(linewidth = 1.1) +
-  scale_x_date(date_breaks = "1 month",
+  scale_x_date(date_breaks = "months",
                labels = label_date_short()) +
   scale_y_log10(breaks = c(0, 300, 1000, 3000, 10000, 30000, 100000),
                 labels = label_number(big.mark = ",")) +
@@ -91,7 +91,7 @@ russia_losses_equipment_long %>%
   )
 
 #### Save image ####
-ggsave("figures/russia-losses-equipment.png", width = 8, height = 8)
+ggsave("figures/russia-losses-equipment.png", width = 8.5, height = 8.5)
 
 ################################
 # Russian Equipment Cumulative #
