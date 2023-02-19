@@ -32,7 +32,8 @@ russia_losses_personnel_long %>%
                labels = label_date_short()) +
   scale_y_log10(breaks = c(0, 300, 1000, 3000, 10000, 30000, 100000),
                 labels = label_number(big.mark = ",")) +
-  scale_colour_paletteer_d("ggsci::default_jco") +
+  scale_colour_paletteer_d("ggsci::default_jco",
+                           labels = c("Personnel", "POWs")) +
   annotate(
     geom = "text",
     x = as.Date(glue("{max(russia_losses_personnel$date)}")),
@@ -44,15 +45,16 @@ russia_losses_personnel_long %>%
   theme(legend.position = c(0.8, 0.6)) +
   labs(
     x = "",
-    y = "",
-    colour = "", shape = "",
+    y = "log scale",
+    colour = "",
+    shape = "",
     title = glue("Russian Casualties (updated {max(russia_losses_personnel$date)})"),
-    subtitle = "(y-axis log scale)",
-    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine | Graphic: @weiyuet"
+    subtitle = "POW numbers not reported from 2022-04-27",
+    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine via Kaggle | Graphic: @weiyuet"
   )
 
 #### Save image ####
-ggsave("figures/russia-losses-personnel.png", width = 6.5, height = 4.5)
+ggsave("figures/russia-losses-personnel.png", width = 7, height = 5)
 
 #####################
 # Russian Equipment #
@@ -80,14 +82,14 @@ russia_losses_equipment_long %>%
              scales = "free") +
   scale_x_date(date_breaks = "2 months", 
                labels = label_date_short(),
-               expand = c(0,0)) +
+               expand = c(0.01, 0)) +
   theme_classic() +
   theme(legend.position = "none") +
   labs(
     x = "",
     y = "",
     title = glue("Russian Equipment Lost (updated {max(russia_losses_equipment$date)})"),
-    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine | Graphic: @weiyuet"
+    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine via Kaggle | Graphic: @weiyuet"
   )
 
 #### Save image ####
@@ -108,7 +110,7 @@ russia_losses_equipment_long %>%
            fill = "gray35") +
   scale_x_continuous(
     labels = label_number(big.mark = ","),
-    breaks = seq(0, 6000, 500),
+    breaks = seq(0, 7000, 500),
     expand = c(0.01, 0)
   ) +
   theme_classic() +
@@ -116,7 +118,7 @@ russia_losses_equipment_long %>%
     x = "",
     y = "",
     title = glue("Russian Equipment Lost - Cumulative (updated {max(russia_losses_equipment$date)})"),
-    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine | Graphic: @weiyuet"
+    caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine via Kaggle | Graphic: @weiyuet"
   )
 
 #### Save image ####
