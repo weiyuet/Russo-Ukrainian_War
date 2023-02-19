@@ -83,6 +83,8 @@ russia_losses_equipment_long %>%
   scale_x_date(date_breaks = "2 months", 
                labels = label_date_short(),
                expand = c(0.01, 0)) +
+  scale_y_continuous(labels = label_number(big.mark = "",
+                                           accuracy = 1)) +
   theme_classic() +
   theme(legend.position = "none") +
   labs(
@@ -93,7 +95,7 @@ russia_losses_equipment_long %>%
   )
 
 #### Save image ####
-ggsave("figures/russia-losses-equipment.png", width = 8.5, height = 8.5)
+ggsave("figures/russia-losses-equipment.png", width = 8, height = 8)
 
 ################################
 # Russian Equipment Cumulative #
