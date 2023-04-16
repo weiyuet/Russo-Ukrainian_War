@@ -12,7 +12,7 @@ library(paletteer)
 # Russian Casualties #
 ######################
 
-#### Load data ####
+#### Load Data ####
 russia_losses_personnel <- read_csv("data/russia_losses_personnel.csv")
 
 #### Data to tidy format ####
@@ -30,7 +30,7 @@ russia_losses_personnel_tidy %>%
   geom_step(linewidth = 1.1) +
   scale_x_date(date_breaks = "months",
                labels = label_date_short()) +
-  scale_y_log10(breaks = c(0, 300, 1000, 3000, 10000, 30000, 100000),
+  scale_y_log10(breaks = c(0, 300, 1000, 3000, 10000, 30000, 100000, 300000),
                 labels = label_number(big.mark = ",")) +
   scale_colour_paletteer_d("ggsci::default_jco",
                            labels = c("Personnel", "POWs")) +
@@ -53,14 +53,14 @@ russia_losses_personnel_tidy %>%
     caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine via Kaggle | Graphic: @weiyuet"
   )
 
-#### Save image ####
+#### Save Image ####
 ggsave("figures/russia-losses-personnel.png", width = 7, height = 5)
 
 #####################
 # Russian Equipment #
 #####################
 
-#### Load data ####
+#### Load Data ####
 russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
 
 #### Data to tidy format ####
@@ -80,9 +80,8 @@ russia_losses_equipment_tidy %>%
   geom_step(colour = "gray35") +
   facet_wrap(~equipment,
              scales = "free") +
-  scale_x_date(date_breaks = "2 months", 
-               labels = label_date_short(),
-               expand = c(0.01, 0)) +
+  scale_x_date(date_breaks = "3 months", 
+               labels = label_date_short()) +
   scale_y_continuous(labels = label_number(big.mark = "",
                                            accuracy = 1)) +
   theme_classic() +
@@ -94,7 +93,7 @@ russia_losses_equipment_tidy %>%
     caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine via Kaggle | Graphic: @weiyuet"
   )
 
-#### Save image ####
+#### Save Image ####
 ggsave("figures/russia-losses-equipment.png", width = 8, height = 8)
 
 ################################
@@ -123,5 +122,5 @@ russia_losses_equipment_tidy %>%
     caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine via Kaggle | Graphic: @weiyuet"
   )
 
-#### Save image ####
+#### Save Image ####
 ggsave("figures/russia-losses-equipment-cumulative.png", width = 8, height = 5)
