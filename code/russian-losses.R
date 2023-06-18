@@ -37,7 +37,7 @@ russia_losses_personnel_tidy %>%
                            labels = c("Personnel", "POWs")) +
   annotate(geom = "text",
            x = as.Date(glue("{max(russia_losses_personnel$date)}")),
-           y = max(russia_losses_personnel$personnel) + 50000,
+           y = max(russia_losses_personnel$personnel) + 70000,
            label = glue("{max(russia_losses_personnel$personnel)}"),
            size = 3) +
   labs(x = "",
