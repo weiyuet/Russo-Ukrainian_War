@@ -75,7 +75,7 @@ russia_losses_equipment_tidy %>%
   ggplot(aes(x = date,
              y = value,
              colour = equipment)) +
-  geom_step(colour = "gray35") +
+  geom_step(colour = "black") +
   facet_wrap(vars(equipment),
              ncol = 3,
              scales = "free") +
@@ -103,7 +103,7 @@ russia_losses_equipment_tidy %>%
   mutate(equipment = fct_reorder(equipment, cumulative_total)) %>%
   ggplot(aes(x = cumulative_total,
              y = equipment)) +
-  geom_col(colour = "gray10",
+  geom_col(colour = "black",
            fill = "gray35") +
   scale_x_continuous(labels = label_number(big.mark = ","),
                      breaks = seq(0, 8000, 500),
