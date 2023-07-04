@@ -106,7 +106,7 @@ russia_losses_equipment_tidy %>%
   geom_col(colour = "black",
            fill = "gray35") +
   scale_x_continuous(labels = label_number(big.mark = ","),
-                     breaks = seq(0, 8000, 500),
+                     breaks = seq(0, 9000, 500),
                      expand = c(0.01, 0)) +
   labs(x = "",
        y = "",
