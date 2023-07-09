@@ -29,7 +29,7 @@ russia_losses_personnel_tidy %>%
              y = value,
              colour = casualties)) +
   geom_step(linewidth = 1.1) +
-  scale_x_date(date_breaks = "months",
+  scale_x_date(date_breaks = "2 months",
                labels = label_date_short()) +
   scale_y_log10(breaks = c(0, 300, 1000, 3000, 10000, 30000, 100000, 300000),
                 labels = label_number(big.mark = ",")) +
@@ -37,7 +37,7 @@ russia_losses_personnel_tidy %>%
                            labels = c("Personnel", "POWs")) +
   annotate(geom = "text",
            x = as.Date(glue("{max(russia_losses_personnel$date)}")),
-           y = max(russia_losses_personnel$personnel) + 70000,
+           y = max(russia_losses_personnel$personnel) + 80000,
            label = glue("{max(russia_losses_personnel$personnel)}"),
            size = 3) +
   labs(x = "",
@@ -79,7 +79,7 @@ russia_losses_equipment_tidy %>%
   facet_wrap(vars(equipment),
              ncol = 3,
              scales = "free") +
-  scale_x_date(date_breaks = "2 months", 
+  scale_x_date(date_breaks = "3 months", 
                labels = label_date_short()) +
   scale_y_continuous(labels = label_number(big.mark = "",
                                            accuracy = 1)) +
