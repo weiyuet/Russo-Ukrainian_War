@@ -65,7 +65,7 @@ russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
 # Data to tidy format
 russia_losses_equipment_tidy <- russia_losses_equipment %>%
   select(-"greatest losses direction") %>%
-  pivot_longer(cols = c(aircraft:`cruise missiles`),
+  pivot_longer(cols = 3:18,
                names_to = "equipment", 
                values_to = "value")
 
@@ -106,7 +106,7 @@ russia_losses_equipment_tidy %>%
   geom_col(colour = "black",
            fill = "gray35") +
   scale_x_continuous(labels = label_number(big.mark = ","),
-                     breaks = seq(0, 9000, 1000),
+                     breaks = seq(0, 10000, 1000),
                      expand = c(0.01, 0)) +
   labs(x = "",
        y = "",
