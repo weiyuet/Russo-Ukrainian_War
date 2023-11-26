@@ -37,7 +37,7 @@ russia_losses_personnel_tidy %>%
                            labels = c("Personnel", "POWs")) +
   annotate(geom = "text",
            x = as.Date(glue("{max(russia_losses_personnel$date)}")),
-           y = max(russia_losses_personnel$personnel) + 90000,
+           y = max(russia_losses_personnel$personnel) + 100000,
            label = glue("{max(russia_losses_personnel$personnel)}"),
            size = 3) +
   labs(x = "",
@@ -106,7 +106,7 @@ russia_losses_equipment_tidy %>%
   geom_col(colour = "black",
            fill = "gray35") +
   scale_x_continuous(labels = label_number(big.mark = ","),
-                     breaks = seq(0, 11000, 1000),
+                     breaks = seq(0, 12000, 1000),
                      expand = c(0.01, 0)) +
   labs(x = "",
        y = "",
