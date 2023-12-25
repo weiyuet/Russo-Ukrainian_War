@@ -79,7 +79,7 @@ russia_losses_equipment_tidy %>%
   facet_wrap(vars(equipment),
              ncol = 3,
              scales = "free") +
-  scale_x_date(date_breaks = "3 months", 
+  scale_x_date(date_breaks = "4 months", 
                labels = label_date_short()) +
   scale_y_continuous(labels = label_number(big.mark = "",
                                            accuracy = 1)) +
