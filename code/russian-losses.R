@@ -64,8 +64,9 @@ russia_losses_equipment <- read_csv("data/russia_losses_equipment.csv")
 #### Wrangle ####
 # Data to tidy format
 russia_losses_equipment_tidy <- russia_losses_equipment %>%
-  select(-"greatest losses direction") %>%
-  pivot_longer(cols = 3:18,
+  select(-"greatest losses direction",
+         -"fuel tank") %>%
+  pivot_longer(cols = 3:17,
                names_to = "equipment", 
                values_to = "value")
 
