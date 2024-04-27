@@ -37,7 +37,7 @@ russia_losses_personnel_tidy %>%
                            labels = c("Personnel", "POWs")) +
   annotate(geom = "text",
            x = as.Date(glue("{max(russia_losses_personnel$date)}")),
-           y = max(russia_losses_personnel$personnel) + 150000,
+           y = max(russia_losses_personnel$personnel) + 200000,
            label = glue("{max(russia_losses_personnel$personnel)}"),
            size = 3) +
   labs(x = "",
@@ -88,8 +88,7 @@ russia_losses_equipment_tidy %>%
        y = "",
        title = glue("Russian Equipment Lost (Day {max(russia_losses_equipment$day)}, updated {max(russia_losses_equipment$date)})"),
        caption = "Data: Armed Forces of Ukraine, Ministry of Defense of Ukraine via Kaggle | Graphic: @weiyuet") +
-  theme_classic() +
-  theme(legend.position = "none")
+  theme_classic()
 
 #### Save Image ####
 ggsave("figures/russia-losses-equipment.png",
