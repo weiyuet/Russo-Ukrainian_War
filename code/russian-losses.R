@@ -31,7 +31,15 @@ russia_losses_personnel_tidy %>%
   geom_step(linewidth = 1.1) +
   scale_x_date(date_breaks = "2 months",
                labels = label_date_short()) +
-  scale_y_log10(breaks = c(0, 300, 1000, 3000, 10000, 30000, 100000, 300000),
+  scale_y_log10(breaks = c(0,
+                           300,
+                           1000,
+                           3000,
+                           10000,
+                           30000,
+                           100000,
+                           300000,
+                           1000000),
                 labels = label_number(big.mark = ",")) +
   scale_colour_paletteer_d("ggsci::default_jco",
                            labels = c("Personnel", "POWs")) +
@@ -106,7 +114,7 @@ russia_losses_equipment_tidy %>%
   geom_col(colour = "black",
            fill = "gray35") +
   scale_x_continuous(labels = label_number(big.mark = ","),
-                     breaks = seq(0, 20000, 2000),
+                     breaks = seq(0, 22000, 2000),
                      expand = c(0.01, 0)) +
   labs(x = "",
        y = "",
