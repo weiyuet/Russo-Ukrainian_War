@@ -29,7 +29,7 @@ russia_losses_personnel_tidy %>%
              y = value,
              colour = casualties)) +
   geom_step(linewidth = 1.1) +
-  scale_x_date(date_breaks = "2 months",
+  scale_x_date(date_breaks = "3 months",
                labels = label_date_short()) +
   scale_y_log10(breaks = c(0,
                            300,
@@ -88,7 +88,7 @@ russia_losses_equipment_tidy %>%
   facet_wrap(vars(equipment),
              ncol = 3,
              scales = "free") +
-  scale_x_date(date_breaks = "4 months", 
+  scale_x_date(date_breaks = "5 months", 
                labels = label_date_short()) +
   scale_y_continuous(labels = label_number(big.mark = "",
                                            accuracy = 1)) +
@@ -114,7 +114,7 @@ russia_losses_equipment_tidy %>%
   geom_col(colour = "black",
            fill = "gray35") +
   scale_x_continuous(labels = label_number(big.mark = ","),
-                     breaks = seq(0, 22000, 2000),
+                     breaks = seq(0, 24000, 2000),
                      expand = c(0.01, 0)) +
   labs(x = "",
        y = "",
